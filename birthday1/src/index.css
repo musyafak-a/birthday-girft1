@@ -1,0 +1,265 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=My+Soul&family=Public+Sans:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&display=swap');
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Geist Variable', sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.205 0 0);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.708 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  html {
+    @apply font-sans;
+    }
+}
+
+@keyframes petal-float-1 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(5deg); }
+}
+
+@keyframes petal-float-2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(-6deg); }
+}
+
+@keyframes bouquet-sway {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(2deg) scale(1.01); }
+}
+
+.animate-petal-1 {
+  animation: petal-float-1 5s ease-in-out infinite;
+}
+
+.animate-petal-2 {
+  animation: petal-float-2 6.5s ease-in-out infinite;
+}
+
+.animate-bouquet {
+  animation: bouquet-sway 7s ease-in-out infinite;
+}
+
+.font-my-soul {
+  font-family: 'My Soul', cursive;
+}
+
+.font-public-sans {
+  font-family: 'Public Sans', sans-serif;
+}
+
+/* ========================================================
+   NATURAL FALLING PETALS ANIMATIONS (SLOW & LOOPING)
+   ======================================================== */
+@keyframes petal-fall-1 {
+  0% {
+    transform: translate3d(0, -40px, 0) rotate(0deg) rotateX(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.9;
+  }
+  25% {
+    transform: translate3d(30px, 200px, 0) rotate(90deg) rotateX(45deg);
+  }
+  50% {
+    transform: translate3d(-25px, 420px, 0) rotate(190deg) rotateX(120deg);
+  }
+  75% {
+    transform: translate3d(35px, 640px, 0) rotate(280deg) rotateX(200deg);
+  }
+  92% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(-15px, 850px, 0) rotate(370deg) rotateX(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes petal-fall-2 {
+  0% {
+    transform: translate3d(0, -40px, 0) rotate(20deg) rotateY(0deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.85;
+  }
+  30% {
+    transform: translate3d(-35px, 240px, 0) rotate(-75deg) rotateY(70deg);
+  }
+  60% {
+    transform: translate3d(30px, 520px, 0) rotate(-170deg) rotateY(160deg);
+  }
+  92% {
+    opacity: 0.85;
+  }
+  100% {
+    transform: translate3d(-20px, 850px, 0) rotate(-310deg) rotateY(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes petal-fall-3 {
+  0% {
+    transform: translate3d(0, -40px, 0) rotate(-15deg);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.95;
+  }
+  20% {
+    transform: translate3d(25px, 180px, 0) rotate(100deg);
+  }
+  48% {
+    transform: translate3d(-35px, 430px, 0) rotate(210deg);
+  }
+  78% {
+    transform: translate3d(30px, 660px, 0) rotate(305deg);
+  }
+  92% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translate3d(5px, 850px, 0) rotate(410deg);
+    opacity: 0;
+  }
+}
+
+.animate-petal-fall-1 {
+  animation-name: petal-fall-1;
+  animation-timing-function: cubic-bezier(0.35, 0, 0.25, 1);
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.animate-petal-fall-2 {
+  animation-name: petal-fall-2;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+.animate-petal-fall-3 {
+  animation-name: petal-fall-3;
+  animation-timing-function: cubic-bezier(0.3, 0, 0.3, 1);
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
