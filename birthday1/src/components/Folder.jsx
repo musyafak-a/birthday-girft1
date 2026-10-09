@@ -21,8 +21,8 @@ const darkenColor = (hex, percent) => {
 };
 
 const Folder = ({
-  color = '#F472B6',
-  backColor = '#FDF2F8',
+  color = '#E5D5B8',
+  backColor = '#F1E5CF',
   size = 1,
   items = [],
   className = ''
@@ -102,8 +102,33 @@ const Folder = ({
 
   return (
     <div style={scaleStyle} className={`transition-transform duration-300 ${className}`}>
+      {/* Global Paper Texture Definitions */}
+      <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+        <defs>
+          {/* Authentic Letter Paper Texture extracted directly from Section Letter (birthday-letter.jpg) */}
+          <pattern id="letterPaperTexture" width="120" height="120" patternUnits="userSpaceOnUse">
+            <image href="/letter-paper-emboss.png" width="120" height="120" preserveAspectRatio="none" />
+          </pattern>
+
+          {/* Deep Burgundy Floral Wax Seal Shading */}
+          <linearGradient id="sealOuterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#8A131F" />
+            <stop offset="45%" stopColor="#680B14" />
+            <stop offset="100%" stopColor="#44040A" />
+          </linearGradient>
+          <radialGradient id="sealInnerGrad" cx="45%" cy="38%" r="62%">
+            <stop offset="0%" stopColor="#80121D" />
+            <stop offset="65%" stopColor="#5B0810" />
+            <stop offset="100%" stopColor="#3B0308" />
+          </radialGradient>
+          <filter id="sealDropShadow" x="-25%" y="-25%" width="150%" height="160%">
+            <feDropShadow dx="0" dy="3.5" stdDeviation="3.5" floodColor="#230407" floodOpacity="0.4" />
+          </filter>
+        </defs>
+      </svg>
+
       <div
-        className="group relative transition-all duration-300 ease-in-out cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 focus-visible:ring-offset-2"
+        className="group relative transition-all duration-300 ease-in-out cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E5D5B8] focus-visible:ring-offset-2"
         style={{
           transform: open ? 'translateY(-10px)' : isHovered ? 'translateY(-6px)' : undefined
         }}
@@ -123,20 +148,22 @@ const Folder = ({
       >
         {/* Envelope Container: 340px x 230px */}
         <div
-          className="relative w-[340px] h-[230px] rounded-2xl shadow-2xl shadow-pink-500/20"
+          className="relative w-[340px] h-[230px] rounded-2xl shadow-2xl shadow-stone-800/15"
           style={{ perspective: '1000px' }}
         >
           {/* 1. Envelope Back Wall (Interior Liner) */}
-          <div className="absolute inset-0 rounded-2xl overflow-hidden z-0">
+          <div className="absolute inset-0 rounded-2xl overflow-hidden z-0" style={{ isolation: 'isolate' }}>
             <svg viewBox="0 0 340 230" className="w-full h-full">
               <defs>
                 <linearGradient id="envelopeInnerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#fdf2f4" />
-                  <stop offset="50%" stopColor="#fed7e2" />
-                  <stop offset="100%" stopColor="#fca5bc" />
+                  <stop offset="0%" stopColor="#FAF5EC" />
+                  <stop offset="50%" stopColor="#F1E5CF" />
+                  <stop offset="100%" stopColor="#E5D5B8" />
                 </linearGradient>
               </defs>
               <rect width="340" height="230" rx="16" fill="url(#envelopeInnerGrad)" />
+              {/* Subtle Letter Paper Texture on Interior Liner */}
+              <rect width="340" height="230" rx="16" fill="url(#letterPaperTexture)" opacity="0.35" />
             </svg>
           </div>
 
@@ -145,6 +172,7 @@ const Folder = ({
             className="absolute top-0 left-0 w-[340px] h-[142px] origin-top pointer-events-none"
             style={{
               transformStyle: 'preserve-3d',
+              isolation: 'isolate',
               transform: isFlapOpen ? 'rotateX(180deg)' : 'rotateX(0deg)',
               zIndex: isFlapOpen ? 10 : 40,
               transition: isFlapOpen
@@ -157,12 +185,9 @@ const Folder = ({
               <svg viewBox="0 0 340 142" className="w-full h-full overflow-visible filter drop-shadow-md">
                 <defs>
                   <linearGradient id="flapFrontGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#f99cb5" />
-                    <stop offset="100%" stopColor="#f57999" />
-                  </linearGradient>
-                  <linearGradient id="sealGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#fb7185" />
-                    <stop offset="100%" stopColor="#e11d48" />
+                    <stop offset="0%" stopColor="#F9F2E6" />
+                    <stop offset="50%" stopColor="#F1E5CF" />
+                    <stop offset="100%" stopColor="#EBDEC8" />
                   </linearGradient>
                 </defs>
 
@@ -172,21 +197,66 @@ const Folder = ({
                   fill="url(#flapFrontGrad)"
                 />
 
+                {/* Subtle Letter Paper Texture on Top Flap (Soft / Semu) */}
+                <path
+                  d="M 0 0 L 340 0 C 335 10, 192 128, 178 135 C 173 137, 167 137, 162 135 C 148 128, 5 10, 0 0 Z"
+                  fill="url(#letterPaperTexture)"
+                  opacity="0.4"
+                />
+
                 {/* Delicate edge stroke highlight */}
                 <path
                   d="M 4 2 L 165 133 C 168 135, 172 135, 175 133 L 336 2"
                   fill="none"
                   stroke="rgba(255, 255, 255, 0.45)"
-                  strokeWidth="1.5"
+                  strokeWidth="1.2"
                 />
 
-                {/* Heart Wax Seal / Button at the tip */}
+                {/* Deep Burgundy Floral Wax Seal (Matching Reference Image) */}
                 <g transform="translate(170, 118)">
-                  <circle r="14" fill="url(#sealGrad)" filter="drop-shadow(0 2px 4px rgba(0,0,0,0.2))" />
+                  {/* 1. Organic Melted Wax Outer Rim with natural pooled ridges */}
                   <path
-                    d="M 0 -4 C -2 -7, -6 -7, -6 -4 C -6 -1, 0 4, 0 5 C 0 4, 6 -1, 6 -4 C 6 -7, 2 -7, 0 -4 Z"
-                    fill="#ffffff"
-                    transform="scale(1.1) translate(0, -0.5)"
+                    d="M 0 -17 C 5.5 -17.5, 12 -15, 15.5 -10.5 C 19 -5.5, 18.5 2, 17 8 C 15.2 13.5, 10.5 17.5, 4.5 17.8 C -2 18, -8.5 18.5, -13.5 14.8 C -18 11.2, -19 4.5, -17.8 -2.5 C -16.8 -9.5, -11 -15.8, 0 -17 Z"
+                    fill="url(#sealOuterGrad)"
+                    filter="url(#sealDropShadow)"
+                  />
+
+                  {/* 2. Soft Rim Highlight / Bevel Ridge */}
+                  <path
+                    d="M -14.5 -4 C -13.5 -11, -8 -15.5, 0 -15.5 C 8 -15.5, 13.5 -11, 14.5 -4"
+                    fill="none"
+                    stroke="rgba(255, 180, 190, 0.35)"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                  />
+
+                  {/* 3. Sunken Stamped Center Face */}
+                  <circle r="11" fill="url(#sealInnerGrad)" stroke="#3E0409" strokeWidth="0.75" />
+
+                  {/* 4. Embossed 5-Petal Flower Motif */}
+                  <g transform="scale(0.85)">
+                    {[0, 72, 144, 216, 288].map(deg => (
+                      <path
+                        key={deg}
+                        transform={`rotate(${deg}) translate(0, -4.6)`}
+                        d="M 0 -3.4 C 2.4 -3.4, 3.2 -1.4, 2.7 1.2 C 2.2 3.4, 0 4.4, 0 4.4 C 0 4.4, -2.2 3.4, -2.7 1.2 C -3.2 -1.4, -2.4 -3.4, 0 -3.4 Z"
+                        fill="#9A1725"
+                        stroke="#42050B"
+                        strokeWidth="0.5"
+                      />
+                    ))}
+                    {/* Flower center pistil */}
+                    <circle r="2" fill="#B32030" stroke="#42050B" strokeWidth="0.5" />
+                    <circle cx="-0.6" cy="-0.6" r="0.7" fill="rgba(255, 230, 235, 0.7)" />
+                  </g>
+
+                  {/* 5. Specular Glossy Arc */}
+                  <path
+                    d="M -11 -7 C -7 -12.5, 4 -13, 9 -8"
+                    fill="none"
+                    stroke="rgba(255, 255, 255, 0.38)"
+                    strokeWidth="1"
+                    strokeLinecap="round"
                   />
                 </g>
               </svg>
@@ -200,8 +270,8 @@ const Folder = ({
               <svg viewBox="0 0 340 142" className="w-full h-full overflow-visible">
                 <defs>
                   <linearGradient id="flapInnerGrad" x1="0%" y1="100%" x2="0%" y2="0%">
-                    <stop offset="0%" stopColor="#fdf2f4" />
-                    <stop offset="100%" stopColor="#fed7e2" />
+                    <stop offset="0%" stopColor="#FAF5EB" />
+                    <stop offset="100%" stopColor="#F1E5CF" />
                   </linearGradient>
                 </defs>
 
@@ -209,6 +279,13 @@ const Folder = ({
                 <path
                   d="M 0 0 L 340 0 C 335 10, 192 128, 178 135 C 173 137, 167 137, 162 135 C 148 128, 5 10, 0 0 Z"
                   fill="url(#flapInnerGrad)"
+                />
+
+                {/* Subtle Letter Paper Texture on Inner Flap */}
+                <path
+                  d="M 0 0 L 340 0 C 335 10, 192 128, 178 135 C 173 137, 167 137, 162 135 C 148 128, 5 10, 0 0 Z"
+                  fill="url(#letterPaperTexture)"
+                  opacity="0.35"
                 />
 
                 {/* White inner border line matching reference image */}
@@ -234,10 +311,10 @@ const Folder = ({
             const transformStyle = open
               ? `${getOpenTransform(i, paperCount)} translate(${currentOffset.x}px, ${currentOffset.y}px)`
               : isHovered
-              ? `translate(-50%, -32px) scale(0.98)`
-              : 'translate(-50%, 15px) scale(0.94)';
+              ? `translate(-50%, -36px) scale(0.98)`
+              : 'translate(-50%, 20px) scale(0.94)';
 
-            const cardHeight = open ? '245px' : isHovered ? '210px' : '160px';
+            const cardHeight = open ? '245px' : isHovered ? '210px' : '155px';
 
             return (
               <div
@@ -258,9 +335,9 @@ const Folder = ({
               >
                 {item || (
                   <div className="w-full h-full flex flex-col justify-center gap-2 p-4 opacity-40">
-                    <div className="h-3 bg-pink-300 rounded-full w-3/4"></div>
-                    <div className="h-2.5 bg-pink-200 rounded-full w-full"></div>
-                    <div className="h-2.5 bg-pink-200 rounded-full w-5/6"></div>
+                    <div className="h-3 bg-amber-200/80 rounded-full w-3/4"></div>
+                    <div className="h-2.5 bg-amber-100 rounded-full w-full"></div>
+                    <div className="h-2.5 bg-amber-100 rounded-full w-5/6"></div>
                   </div>
                 )}
               </div>
@@ -268,29 +345,41 @@ const Folder = ({
           })}
 
           {/* 4. Envelope Front Pocket (Left, Right, Bottom Flaps) (z-30) */}
-          {/* Side flaps start directly from (0,0) and (340,0) to completely overlap the top flap and cover the sides */}
-          <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden rounded-2xl z-30">
+          <div
+            className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden rounded-2xl z-30"
+            style={{ isolation: 'isolate' }}
+          >
             <svg viewBox="0 0 340 230" className="w-full h-full">
               <defs>
                 <linearGradient id="pocketBaseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#f89cb4" />
-                  <stop offset="100%" stopColor="#f5809e" />
+                  <stop offset="0%" stopColor="#E8D9BD" />
+                  <stop offset="100%" stopColor="#DEC9A8" />
                 </linearGradient>
                 <linearGradient id="sideFlapLeftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#f9a3ba" />
-                  <stop offset="100%" stopColor="#f57b9b" />
+                  <stop offset="0%" stopColor="#EFE4D0" />
+                  <stop offset="45%" stopColor="#E5D5B8" />
+                  <stop offset="100%" stopColor="#DDC5A3" />
                 </linearGradient>
                 <linearGradient id="sideFlapRightGrad" x1="100%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#f798b1" />
-                  <stop offset="100%" stopColor="#f47495" />
+                  <stop offset="0%" stopColor="#EAE0CA" />
+                  <stop offset="45%" stopColor="#E1CFB0" />
+                  <stop offset="100%" stopColor="#D7BE9B" />
                 </linearGradient>
                 <linearGradient id="bottomFlapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#fbaec2" />
-                  <stop offset="100%" stopColor="#f5799a" />
+                  <stop offset="0%" stopColor="#EDE1C9" />
+                  <stop offset="40%" stopColor="#E5D5B8" />
+                  <stop offset="100%" stopColor="#DCBFA0" />
                 </linearGradient>
                 <filter id="bottomFlapShadow" x="-10%" y="-15%" width="120%" height="130%">
-                  <feDropShadow dx="0" dy="-3" stdDeviation="4" floodColor="#881337" floodOpacity="0.16" />
+                  <feDropShadow dx="0" dy="-2.5" stdDeviation="3.5" floodColor="#5C4228" floodOpacity="0.14" />
                 </filter>
+                {/* Clip Path defining ONLY the front pocket flaps - opening where photos peek is 100% excluded */}
+                <clipPath id="pocketFlapsClip">
+                  <path d="M 0 95 L 170 150 L 340 95 L 340 230 L 0 230 Z" />
+                  <path d="M 0 0 L 175 100 L 0 230 Z" />
+                  <path d="M 340 0 L 165 100 L 340 230 Z" />
+                  <path d="M 0 230 L 0 205 C 15 165, 130 88, 170 88 C 210 88, 325 165, 340 205 L 340 230 Z" />
+                </clipPath>
               </defs>
 
               {/* Pocket Base Wall: Fills the entire lower pocket from y=95 to 230 */}
@@ -318,14 +407,24 @@ const Folder = ({
                 filter="url(#bottomFlapShadow)"
               />
 
-              {/* White Rim Curved Highlight on Bottom Flap (Matching reference image) */}
+              {/* White Rim Curved Highlight on Bottom Flap */}
               <path
                 d="M 12 205 C 35 162, 135 89, 170 89 C 205 89, 305 162, 328 205"
                 fill="none"
-                stroke="rgba(255, 255, 255, 0.75)"
-                strokeWidth="2.5"
+                stroke="rgba(255, 255, 255, 0.35)"
+                strokeWidth="1"
                 strokeLinecap="round"
               />
+
+              {/* Subtle Letter Paper Texture ONLY inside Front Pocket Flaps (Soft / Semu) */}
+              <g clipPath="url(#pocketFlapsClip)">
+                <rect
+                  width="340"
+                  height="230"
+                  fill="url(#letterPaperTexture)"
+                  opacity="0.38"
+                />
+              </g>
             </svg>
           </div>
         </div>

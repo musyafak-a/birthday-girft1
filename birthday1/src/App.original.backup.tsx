@@ -347,153 +347,151 @@ export function App() {
               className="relative w-[310px] sm:w-[350px] bg-white rounded-[2px] shadow-[0_20px_60px_rgba(0,0,0,0.22)] p-3 sm:p-3.5 transition-all duration-300 hover:rotate-0 hover:scale-[1.02]"
               style={{ transform: 'rotate(-3.5deg)' }}
             >
-            {/* Header: Avatar, Username, More */}
-            <div className="flex items-center justify-between pb-2.5 px-0.5">
-              <div className="flex items-center gap-2">
-                {/* Avatar Circle */}
-                <div className="w-7 h-7 rounded-full bg-neutral-300 flex-shrink-0" />
-                {/* Username */}
-                <span className="text-xs font-semibold text-neutral-800 tracking-tight">
-                  username_
-                </span>
-              </div>
-              {/* More button */}
-              <button
-                type="button"
-                className="text-neutral-700 hover:text-black p-0.5 transition-colors focus:outline-none"
-                title="More options"
-              >
-                <MoreHorizontal className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Photo Frame Container (Tanpa stroke / border) */}
-            <div className="relative w-full h-[295px] sm:h-[320px] rounded-[2px] bg-neutral-100 overflow-visible">
-              {/* 1. Base Photo (Frame 2.png) - Clipped strictly inside frame */}
-              <div className="absolute inset-0 overflow-hidden rounded-[2px]">
-                <img
-                  src="/Frame 2.png"
-                  alt="Base Photo"
-                  className="w-full absolute left-0 top-[-92px] object-cover pointer-events-none select-none"
-                />
-              </div>
-
-              {/* 2. Popout Subject (Frame 2s.png) - Top side pops out, left and right sides cropped to frame */}
-              <div
-                className="absolute inset-0 pointer-events-none select-none z-10"
-                style={{ clipPath: 'inset(-180px 0 0 0)' }}
-              >
-                <img
-                  src="/Frame 2s.png"
-                  alt="Popout Subject"
-                  className="w-full absolute left-0 top-[-92px] object-cover pointer-events-none select-none"
-                />
-              </div>
-            </div>
-
-            {/* Action Buttons: Liked, Comment, Repost, Share, Bookmark */}
-            <div className="flex items-center justify-between pt-2.5 pb-1 px-0.5">
-              <div className="flex items-center gap-3 text-neutral-800">
-                {/* Liked */}
+              {/* Header: Avatar, Username, More */}
+              <div className="flex items-center justify-between pb-2.5 px-0.5">
+                <div className="flex items-center gap-2">
+                  {/* Avatar Circle */}
+                  <div className="w-7 h-7 rounded-full bg-neutral-300 flex-shrink-0" />
+                  {/* Username */}
+                  <span className="text-xs font-semibold text-neutral-800 tracking-tight">
+                    username_
+                  </span>
+                </div>
+                {/* More button */}
                 <button
                   type="button"
-                  onClick={() => setIsLiked(prev => !prev)}
-                  className="transition-transform active:scale-125 focus:outline-none"
-                  title="Like"
+                  className="text-neutral-700 hover:text-black p-0.5 transition-colors focus:outline-none"
+                  title="More options"
                 >
-                  <Heart
-                    className={`w-[19px] h-[19px] transition-colors ${
-                      isLiked ? 'fill-red-500 text-red-500' : 'text-neutral-800 hover:text-neutral-600'
-                    }`}
+                  <MoreHorizontal className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Photo Frame Container (Tanpa stroke / border) */}
+              <div className="relative w-full h-[295px] sm:h-[320px] rounded-[2px] bg-neutral-100 overflow-visible">
+                {/* 1. Base Photo (Frame 2.png) - Clipped strictly inside frame */}
+                <div className="absolute inset-0 overflow-hidden rounded-[2px]">
+                  <img
+                    src="/Frame 2.png"
+                    alt="Base Photo"
+                    className="w-full absolute left-0 top-[-92px] object-cover pointer-events-none select-none"
+                  />
+                </div>
+
+                {/* 2. Popout Subject (Frame 2s.png) - Top side pops out, left and right sides cropped to frame */}
+                <div
+                  className="absolute inset-0 pointer-events-none select-none z-10"
+                  style={{ clipPath: 'inset(-180px 0 0 0)' }}
+                >
+                  <img
+                    src="/Frame 2s.png"
+                    alt="Popout Subject"
+                    className="w-full absolute left-0 top-[-92px] object-cover pointer-events-none select-none"
+                  />
+                </div>
+              </div>
+
+              {/* Action Buttons: Liked, Comment, Repost, Share, Bookmark */}
+              <div className="flex items-center justify-between pt-2.5 pb-1 px-0.5">
+                <div className="flex items-center gap-3 text-neutral-800">
+                  {/* Liked */}
+                  <button
+                    type="button"
+                    onClick={() => setIsLiked(prev => !prev)}
+                    className="transition-transform active:scale-125 focus:outline-none"
+                    title="Like"
+                  >
+                    <Heart
+                      className={`w-[19px] h-[19px] transition-colors ${isLiked ? 'fill-red-500 text-red-500' : 'text-neutral-800 hover:text-neutral-600'
+                        }`}
+                    />
+                  </button>
+
+                  {/* Comment */}
+                  <button
+                    type="button"
+                    className="hover:text-neutral-600 transition-colors focus:outline-none"
+                    title="Comment"
+                  >
+                    <MessageCircle className="w-[19px] h-[19px]" />
+                  </button>
+
+                  {/* Repost */}
+                  <button
+                    type="button"
+                    className="hover:text-neutral-600 transition-colors focus:outline-none"
+                    title="Repost"
+                  >
+                    <Repeat2 className="w-[19px] h-[19px]" />
+                  </button>
+
+                  {/* Share */}
+                  <button
+                    type="button"
+                    className="hover:text-neutral-600 transition-colors focus:outline-none"
+                    title="Share"
+                  >
+                    <Send className="w-[19px] h-[19px]" />
+                  </button>
+                </div>
+
+                {/* Bookmark */}
+                <button
+                  type="button"
+                  onClick={() => setIsBookmarked(prev => !prev)}
+                  className="hover:text-neutral-600 transition-colors focus:outline-none"
+                  title="Save"
+                >
+                  <Bookmark
+                    className={`w-[19px] h-[19px] transition-colors ${isBookmarked ? 'fill-neutral-900 text-neutral-900' : 'text-neutral-800'
+                      }`}
                   />
                 </button>
-
-                {/* Comment */}
-                <button
-                  type="button"
-                  className="hover:text-neutral-600 transition-colors focus:outline-none"
-                  title="Comment"
-                >
-                  <MessageCircle className="w-[19px] h-[19px]" />
-                </button>
-
-                {/* Repost */}
-                <button
-                  type="button"
-                  className="hover:text-neutral-600 transition-colors focus:outline-none"
-                  title="Repost"
-                >
-                  <Repeat2 className="w-[19px] h-[19px]" />
-                </button>
-
-                {/* Share */}
-                <button
-                  type="button"
-                  className="hover:text-neutral-600 transition-colors focus:outline-none"
-                  title="Share"
-                >
-                  <Send className="w-[19px] h-[19px]" />
-                </button>
               </div>
 
-              {/* Bookmark */}
-              <button
-                type="button"
-                onClick={() => setIsBookmarked(prev => !prev)}
-                className="hover:text-neutral-600 transition-colors focus:outline-none"
-                title="Save"
-              >
-                <Bookmark
-                  className={`w-[19px] h-[19px] transition-colors ${
-                    isBookmarked ? 'fill-neutral-900 text-neutral-900' : 'text-neutral-800'
-                  }`}
-                />
-              </button>
+              {/* Caption & Verified Badge */}
+              <div className="px-0.5 pt-0.5 text-left">
+                <p className="text-[11px] sm:text-xs text-neutral-800 leading-snug">
+                  <span className="font-semibold text-neutral-900 mr-1">username_</span>
+                  {/* Official Instagram Verified Badge */}
+                  <svg
+                    className="w-3 h-3 text-[#0095F6] inline-block mr-1.5 align-middle"
+                    viewBox="0 0 40 40"
+                    fill="none"
+                  >
+                    <path
+                      d="M19.998 3.333c1.373 0 2.68.567 3.633 1.554l1.45 1.503c.576.597 1.345.98 2.181 1.071l2.08.228c1.365.15 2.584.887 3.313 1.999.728 1.113.882 2.479.418 3.714l-.707 1.882c-.285.759-.285 1.597 0 2.356l.707 1.882c.464 1.235.31 2.601-.418 3.714-.729 1.112-1.948 1.849-3.313 1.999l-2.08.228c-.836.091-1.605.474-2.181 1.071l-1.45 1.503c-.953.987-2.26 1.554-3.633 1.554s-2.68-.567-3.633-1.554l-1.45-1.503c-.576-.597-1.345-.98-2.181-1.071l-2.08-.228c-1.365-.15-2.584-.887-3.313-1.999-.728-1.113-.882-2.479-.418-3.714l.707-1.882c.285-.759.285-1.597 0-2.356l-.707-1.882c-.464-1.235-.31-2.601.418-3.714.729-1.112 1.948-1.849 3.313-1.999l2.08-.228c.836-.091 1.605-.474 2.181-1.071l1.45-1.503c.953-.987 2.26-1.554 3.633-1.554z"
+                      fill="#0095F6"
+                    />
+                    <path
+                      d="M17.5 24.5l-5-5 1.77-1.77 3.23 3.23 7.73-7.73 1.77 1.77-9.5 9.5z"
+                      fill="#FFFFFF"
+                    />
+                  </svg>
+                  <span className="text-neutral-700">lorem ipsum dolor sit amet</span>
+                </p>
+              </div>
             </div>
 
-            {/* Caption & Verified Badge */}
-            <div className="px-0.5 pt-0.5 text-left">
-              <p className="text-[11px] sm:text-xs text-neutral-800 leading-snug">
-                <span className="font-semibold text-neutral-900 mr-1">username_</span>
-                {/* Official Instagram Verified Badge */}
-                <svg
-                  className="w-3 h-3 text-[#0095F6] inline-block mr-1.5 align-middle"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                >
-                  <path
-                    d="M19.998 3.333c1.373 0 2.68.567 3.633 1.554l1.45 1.503c.576.597 1.345.98 2.181 1.071l2.08.228c1.365.15 2.584.887 3.313 1.999.728 1.113.882 2.479.418 3.714l-.707 1.882c-.285.759-.285 1.597 0 2.356l.707 1.882c.464 1.235.31 2.601-.418 3.714-.729 1.112-1.948 1.849-3.313 1.999l-2.08.228c-.836.091-1.605.474-2.181 1.071l-1.45 1.503c-.953.987-2.26 1.554-3.633 1.554s-2.68-.567-3.633-1.554l-1.45-1.503c-.576-.597-1.345-.98-2.181-1.071l-2.08-.228c-1.365-.15-2.584-.887-3.313-1.999-.728-1.113-.882-2.479-.418-3.714l.707-1.882c.285-.759.285-1.597 0-2.356l-.707-1.882c-.464-1.235-.31-2.601.418-3.714.729-1.112 1.948-1.849 3.313-1.999l2.08-.228c.836-.091 1.605-.474 2.181-1.071l1.45-1.503c.953-.987 2.26-1.554 3.633-1.554z"
-                    fill="#0095F6"
-                  />
-                  <path
-                    d="M17.5 24.5l-5-5 1.77-1.77 3.23 3.23 7.73-7.73 1.77 1.77-9.5 9.5z"
-                    fill="#FFFFFF"
-                  />
-                </svg>
-                <span className="text-neutral-700">lorem ipsum dolor sit amet</span>
-              </p>
-            </div>
+            {/* Draggable Bouquet (Buket Bunga Satunya - bouquet2.png) */}
+            <motion.div
+              drag
+              dragMomentum={false}
+              whileHover={{ scale: 1.05 }}
+              whileDrag={{ scale: 1.12, cursor: 'grabbing' }}
+              className="absolute -bottom-10 -right-6 sm:-bottom-14 sm:-right-10 z-40 cursor-grab active:cursor-grabbing select-none touch-none"
+              title="Buket Bunga 💐 (Tahan & seret kursor untuk memindahkan)"
+            >
+              <img
+                src="/bouquet2.png"
+                alt="Buket Bunga"
+                className="w-48 sm:w-56 md:w-64 h-auto drop-shadow-[0_20px_35px_rgba(0,0,0,0.35)] pointer-events-none select-none transform rotate-[-6deg]"
+                draggable={false}
+              />
+            </motion.div>
           </div>
-
-          {/* Draggable Bouquet (Buket Bunga Satunya - bouquet2.png) */}
-          <motion.div
-            drag
-            dragMomentum={false}
-            whileHover={{ scale: 1.05 }}
-            whileDrag={{ scale: 1.12, cursor: 'grabbing' }}
-            className="absolute -bottom-10 -right-6 sm:-bottom-14 sm:-right-10 z-40 cursor-grab active:cursor-grabbing select-none touch-none"
-            title="Buket Bunga 💐 (Tahan & seret kursor untuk memindahkan)"
-          >
-            <img
-              src="/bouquet2.png"
-              alt="Buket Bunga"
-              className="w-48 sm:w-56 md:w-64 h-auto drop-shadow-[0_20px_35px_rgba(0,0,0,0.35)] pointer-events-none select-none transform rotate-[-6deg]"
-              draggable={false}
-            />
-          </motion.div>
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* ========================================================
           SECTION 2: PAPER CRUMPLE + ORNAMEN POLAROID, BUKET, & KELOPAK
@@ -803,7 +801,7 @@ export function App() {
             })}
           />
         </div>
-
+        {/* 
         <div className="text-center space-y-2 mt-4">
           <p className="text-xs font-medium text-[#FF6100]">
             💡 Tips: Klik kartu polaroid mana saja untuk melihatnya dalam ukuran besar dan membaliknya dalam efek 3D Flip Card!
@@ -811,7 +809,7 @@ export function App() {
           <div className="font-mono text-xs text-[#2F2F2F]/70">
             (Press <kbd className="px-1.5 py-0.5 bg-neutral-200 border border-neutral-300 rounded text-[#2F2F2F] font-semibold">d</kbd> to toggle dark mode)
           </div>
-        </div>
+        </div> */}
       </section>
 
       {/* MODAL POPUP: FULL VIEW + REACT BITS 3D FLIP CARD */}
