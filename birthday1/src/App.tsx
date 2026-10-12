@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import Folder from './components/Folder';
 import FlipCard from './components/FlipCard';
 import PaperCrumple from './components/PaperCrumple';
-import PatternWaves from './components/PatternWaves';
 import FallingPetals from './components/FallingPetals';
 import { Camera, X, RotateCw, Sparkles, ChevronDown, Image as ImageIcon, Heart, MessageCircle, Repeat2, Send, Bookmark, MoreHorizontal } from 'lucide-react';
 
@@ -123,63 +122,6 @@ export function App() {
     setPaperImage(url);
   };
 
-  // Section 1: Beach Halftone Waves Configuration
-  const wavePreset = 'ocean';
-  const wavePattern = 'heart';
-  const halftoneStyle = 'overlay';
-  const waveSpeed = 0.08; // Animasi gerak lambat
-  const fullCoverage = true; // Menutupi 1 gambar full
-  const halftoneSize = 'large'; // Ukuran love default
-
-  const getSpacing = (size: 'standard' | 'large' | 'xl') => {
-    switch (size) {
-      case 'standard':
-        return 12; // Ukuran standar sebelumnya
-      case 'xl':
-        return 24; // Ukuran ekstra besar
-      case 'large':
-      default:
-        return 17; // Sedikit lebih besar (default baru)
-    }
-  };
-
-  const getHalftoneConfig = (style: 'overlay' | 'pink' | 'cyan' | 'gold' | 'soft') => {
-    switch (style) {
-      case 'pink':
-        return {
-          blendMode: 'screen' as React.CSSProperties['mixBlendMode'],
-          color: '#ffd6e7',
-          label: 'Pink Love'
-        };
-      case 'cyan':
-        return {
-          blendMode: 'screen' as React.CSSProperties['mixBlendMode'],
-          color: '#38bdf8',
-          label: 'Tropical Cyan'
-        };
-      case 'gold':
-        return {
-          blendMode: 'overlay' as React.CSSProperties['mixBlendMode'],
-          color: '#fef08a',
-          label: 'Golden Sand'
-        };
-      case 'soft':
-        return {
-          blendMode: 'soft-light' as React.CSSProperties['mixBlendMode'],
-          color: '#ffffff',
-          label: 'Soft Light'
-        };
-      case 'overlay':
-      default:
-        return {
-          blendMode: 'overlay' as React.CSSProperties['mixBlendMode'],
-          color: '#ffffff',
-          label: 'Shimmer Overlay'
-        };
-    }
-  };
-
-  const halftoneConfig = getHalftoneConfig(halftoneStyle);
 
   // Keyboard shortcut ESC to close popup
   useEffect(() => {
@@ -193,78 +135,43 @@ export function App() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-[#F2F2F2] pb-24 selection:bg-[#FF6100]/20 selection:text-[#2F2F2F] relative overflow-x-hidden w-full">
+    <div className="flex flex-col items-center justify-start min-h-screen page-looping-bg pb-24 selection:bg-[#FF6100]/20 selection:text-[#2F2F2F] relative overflow-x-hidden w-full">
       {/* Kelopak Bunga Jatuh Melayang Looping 1 Halaman Penuh */}
       <FallingPetals />
       {/* ========================================================
-          SECTION 1: HERO BEACH + INTERACTIVE HALFTONE (PATTERNWAVES) + INSTAGRAM POST CARD
+          SECTION 1: HERO BEACH + INSTAGRAM POST CARD
           ======================================================== */}
       <section className="relative w-full min-h-[660px] md:min-h-[740px] flex items-center justify-center overflow-hidden select-none mb-14 py-10">
-        {/* Layer 1: Beach Background Image (beach.jpe) */}
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <img
-            src="/tropical-beach.jpg"
-            alt="Beach Background"
-            className="w-full h-full object-cover object-center transform scale-105"
-          />
-        </div>
+        {/* Ambient lighting */}
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/15 via-transparent to-transparent z-[5]" />
 
-        {/* Layer 2: Interactive Halftone Waves (React Bits PatternWaves - Full Coverage, Lambat, Tidak Monokrom) */}
-        <div
-          className="absolute inset-0 w-full h-full pointer-events-auto transition-all duration-500"
-          style={{ mixBlendMode: halftoneConfig.blendMode }}
-        >
-          <PatternWaves
-            preset={wavePreset}
-            pattern={wavePattern}
-            spacing={getSpacing(halftoneSize)}
-            markSize={0.95}
-            minMarkRatio={fullCoverage ? 0.42 : 0.04}
-            depth={0.35}
-            shine={1.1}
-            contrast={1.1}
-            speed={waveSpeed}
-            scale={1.6}
-            color={halftoneConfig.color}
-            pinkColor="#ff2a85"
-            backgroundColor="rgba(0, 0, 0, 0)"
-            interactive={true}
-            cursorSize={95}
-            cursorStrength={0.8}
-            fade="none"
-            className="w-full h-full"
-          />
-        </div>
+        {/* SVG Filter for Organic Watercolor Paint & Torn Paper Scrap Edge */}
+        <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+          <defs>
+            <filter id="watercolor-bleed" x="-10%" y="-10%" width="120%" height="120%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+            <filter id="paper-torn-filter" x="-10%" y="-10%" width="120%" height="120%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="4" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.5" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+          </defs>
+        </svg>
 
-        {/* Layer 3: Soft subtle ambient lighting */}
-        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-transparent z-[5]" />
-
-        {/* Layer 4: Bottom Fade Out Gradient into page background #F2F2F2 */}
-        <div className="absolute inset-x-0 bottom-0 h-48 md:h-64 bg-gradient-to-t from-[#F2F2F2] via-[#F2F2F2]/85 via-40% to-transparent pointer-events-none z-10" />
-
-        {/* Layer 5: Instagram Post Card with 3D Popout Effect & Floating Typography */}
+        {/* Instagram Post Card with 3D Popout Effect & Floating Typography */}
         <div className="relative z-20 flex items-center justify-center w-full px-4 pointer-events-auto">
           {/* Card & Floating Typography Wrapper */}
           <div className="relative flex items-center justify-center">
             {/* Top Left: Happy */}
             <div className="absolute -top-16 sm:-top-20 md:-top-24 -left-12 sm:-left-36 md:-left-56 lg:-left-64 z-30 pointer-events-none select-none rotate-[-8deg] flex items-baseline">
               <span
-                className="font-my-soul text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none inline-block relative z-10"
-                style={{
-                  color: '#FDB101',
-                  WebkitTextStroke: '3px #F45535',
-                  paintOrder: 'stroke fill',
-                }}
+                className="font-my-soul text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none inline-block relative z-10 watercolor-gold watercolor-filter"
               >
                 H
               </span>
               <span
-                className="font-public-sans font-black tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0"
-                style={{
-                  color: '#FED904',
-                  WebkitTextStroke: '2.5px #FC5236',
-                  paintOrder: 'stroke fill',
-                }}
+                className="font-merriweather font-normal tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0 watercolor-gold watercolor-filter"
               >
                 appy
               </span>
@@ -273,22 +180,12 @@ export function App() {
             {/* Top Right: Birthday!! */}
             <div className="absolute -top-12 sm:-top-16 md:-top-20 -right-12 sm:-right-36 md:-right-56 lg:-right-64 z-30 pointer-events-none select-none rotate-[6deg] flex items-baseline">
               <span
-                className="font-my-soul text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none inline-block relative z-10"
-                style={{
-                  color: '#FDB101',
-                  WebkitTextStroke: '3px #F45535',
-                  paintOrder: 'stroke fill',
-                }}
+                className="font-my-soul text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none inline-block relative z-10 watercolor-gold watercolor-filter"
               >
                 B
               </span>
               <span
-                className="font-public-sans font-black tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0"
-                style={{
-                  color: '#FED904',
-                  WebkitTextStroke: '2.5px #FC5236',
-                  paintOrder: 'stroke fill',
-                }}
+                className="font-merriweather font-normal tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0 watercolor-gold watercolor-filter"
               >
                 irthday!!
               </span>
@@ -297,22 +194,12 @@ export function App() {
             {/* Bottom Left: Jude */}
             <div className="absolute -bottom-8 sm:-bottom-12 -left-8 sm:-left-24 md:-left-36 z-30 pointer-events-none select-none rotate-[-6deg] flex items-baseline">
               <span
-                className="font-my-soul text-7xl sm:text-8xl md:text-9xl leading-none inline-block relative z-10"
-                style={{
-                  color: '#DD8ED4',
-                  WebkitTextStroke: '3px #B02EAE',
-                  paintOrder: 'stroke fill',
-                }}
+                className="font-my-soul text-7xl sm:text-8xl md:text-9xl leading-none inline-block relative z-10 watercolor-pink watercolor-filter"
               >
                 J
               </span>
               <span
-                className="font-public-sans font-black tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0"
-                style={{
-                  color: '#FECCF4',
-                  WebkitTextStroke: '2.5px #FC36A3',
-                  paintOrder: 'stroke fill',
-                }}
+                className="font-merriweather font-normal tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0 watercolor-pink watercolor-filter"
               >
                 ude
               </span>
@@ -321,22 +208,12 @@ export function App() {
             {/* Bottom Right: 29 y.o */}
             <div className="absolute -bottom-8 sm:-bottom-12 -right-8 sm:-right-24 md:-right-36 z-30 pointer-events-none select-none rotate-[8deg] flex items-baseline">
               <span
-                className="font-public-sans font-black tracking-tight text-5xl sm:text-6xl md:text-7xl leading-none inline-block relative z-0"
-                style={{
-                  color: '#FECCF4',
-                  WebkitTextStroke: '3px #FC36A3',
-                  paintOrder: 'stroke fill',
-                }}
+                className="font-merriweather font-normal tracking-tight text-5xl sm:text-6xl md:text-7xl leading-none inline-block relative z-0 watercolor-pink watercolor-filter"
               >
                 29
               </span>
               <span
-                className="font-my-soul text-5xl sm:text-6xl md:text-7xl leading-none inline-block -ml-4 sm:-ml-5 relative z-10"
-                style={{
-                  color: '#DD8ED4',
-                  WebkitTextStroke: '2.5px #B02EAE',
-                  paintOrder: 'stroke fill',
-                }}
+                className="font-my-soul text-5xl sm:text-6xl md:text-7xl leading-none inline-block -ml-4 sm:-ml-5 relative z-10 watercolor-pink watercolor-filter"
               >
                 y.o
               </span>
@@ -344,7 +221,7 @@ export function App() {
 
             {/* The Instagram Post Card */}
             <div
-              className="relative w-[310px] sm:w-[350px] bg-white rounded-[2px] shadow-[0_20px_60px_rgba(0,0,0,0.22)] p-3 sm:p-3.5 transition-all duration-300 hover:rotate-0 hover:scale-[1.02]"
+              className="relative w-[310px] sm:w-[350px] bg-white/80 backdrop-blur-md rounded-[2px] border border-white/50 shadow-[0_20px_60px_rgba(0,0,0,0.22)] p-3 sm:p-3.5 transition-all duration-300 hover:rotate-0 hover:scale-[1.02]"
               style={{ transform: 'rotate(-3.5deg)' }}
             >
               {/* Header: Avatar, Username, More */}
@@ -497,13 +374,16 @@ export function App() {
           SECTION 2: PAPER CRUMPLE + ORNAMEN POLAROID, BUKET, & KELOPAK
           ======================================================== */}
       <section className="w-full flex flex-col items-center mb-20 relative overflow-hidden px-2 md:px-6">
-        <div className="text-center mb-4 px-4 z-10">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF6100] bg-[#FF6100]/10 px-3.5 py-1 rounded-full border border-[#FF6100]/20">
+        <div className="text-center mb-4 px-4 z-10 flex flex-col items-center">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF6100] bg-[#FF6100]/10 px-3.5 py-1 rounded-full border border-[#FF6100]/20 mb-2">
             Section 2 • Interactive Paper & Ornaments
           </span>
-          <h2 className="text-[#2F2F2F] text-2xl font-bold mt-2.5">
-            Surat Ucapan Interaktif 💌
-          </h2>
+          <div className="relative inline-flex items-center justify-center my-1 px-8 py-2.5 sm:px-10 sm:py-3">
+            <div className="absolute inset-0 paper-scrap-bg -rotate-[0.6deg] pointer-events-none" />
+            <h2 className="relative z-10 text-[#2F2F2F] text-2xl sm:text-3xl md:text-4xl font-bold font-cormorant tracking-tight flex items-center justify-center">
+              <span className="gold-heading-gradient mr-1.5 sm:mr-2">Surat</span>Ucapan Interaktif
+            </h2>
+          </div>
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
             Surat diputar ke kanan dengan ornamen polaroid foto, buket bunga, dan kelopak bunga bertaburan!
           </p>
@@ -704,14 +584,17 @@ export function App() {
       {/* ========================================================
           SECTION 3: MEMORY LETTER & POLAROID PHOTO CARDS
           ======================================================== */}
-      <section className="w-full max-w-4xl flex flex-col items-center pt-10 relative border-t border-neutral-300/80">
-        <div className="text-center mb-2">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF6100] bg-[#FF6100]/10 px-3.5 py-1 rounded-full border border-[#FF6100]/20">
+      <section className="w-full max-w-4xl flex flex-col items-center pt-10 relative border-t border-amber-900/15">
+        <div className="text-center mb-2 flex flex-col items-center">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF6100] bg-[#FF6100]/10 px-3.5 py-1 rounded-full border border-[#FF6100]/20 mb-2">
             Section 3 • Memory Letter 💌
           </span>
-          <h2 className="text-[#2F2F2F] text-2xl font-bold mt-2.5">
-            Surat Foto Polaroid 📸💌
-          </h2>
+          <div className="relative inline-flex items-center justify-center my-1 px-8 py-2.5 sm:px-10 sm:py-3">
+            <div className="absolute inset-0 paper-scrap-bg rotate-[0.6deg] pointer-events-none" />
+            <h2 className="relative z-10 text-[#2F2F2F] text-2xl sm:text-3xl md:text-4xl font-bold font-cormorant tracking-tight flex items-center justify-center">
+              <span className="gold-heading-gradient mr-1.5 sm:mr-2">Surat</span>Foto Polaroid
+            </h2>
+          </div>
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
             Arahkan kursor untuk mengintip, klik amplop untuk membuka seluruh foto!
           </p>
