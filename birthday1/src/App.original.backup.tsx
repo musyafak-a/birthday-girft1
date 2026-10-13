@@ -502,7 +502,7 @@ export function App() {
             Section 2 • Interactive Paper & Ornaments
           </span>
           <h2 className="text-[#2F2F2F] text-2xl font-bold mt-2.5">
-            Surat Ucapan Interaktif 💌
+            Surat Ucapan
           </h2>
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
             Surat diputar ke kanan dengan ornamen polaroid foto, buket bunga, dan kelopak bunga bertaburan!

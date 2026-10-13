@@ -498,11 +498,8 @@ export function App() {
           ======================================================== */}
       <section className="w-full flex flex-col items-center mb-20 relative overflow-hidden px-2 md:px-6">
         <div className="text-center mb-4 px-4 z-10">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF6100] bg-[#FF6100]/10 px-3.5 py-1 rounded-full border border-[#FF6100]/20">
-            Section 2 • Interactive Paper & Ornaments
-          </span>
           <h2 className="text-[#2F2F2F] text-3xl md:text-4xl font-bold mt-2 font-cormorant tracking-tight">
-            Surat Ucapan Interaktif
+            Surat Ucapan
           </h2>
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
             Surat diputar ke kanan dengan ornamen polaroid foto, buket bunga, dan kelopak bunga bertaburan!
@@ -706,9 +703,7 @@ export function App() {
           ======================================================== */}
       <section className="w-full max-w-4xl flex flex-col items-center pt-10 relative border-t border-neutral-300/80">
         <div className="text-center mb-2">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF6100] bg-[#FF6100]/10 px-3.5 py-1 rounded-full border border-[#FF6100]/20">
-            Section 3 • Memory Letter 💌
-          </span>
+
           <h2 className="text-[#2F2F2F] text-3xl md:text-4xl font-bold mt-2 font-cormorant tracking-tight">
             Surat Foto Polaroid 📸💌
           </h2>

@@ -5,6 +5,7 @@ import FlipCard from './components/FlipCard';
 import PaperCrumple from './components/PaperCrumple';
 import FallingPetals from './components/FallingPetals';
 import { Camera, X, RotateCw, Sparkles, ChevronDown, Image as ImageIcon, Heart, MessageCircle, Repeat2, Send, Bookmark, MoreHorizontal } from 'lucide-react';
+import { LetterCanvas } from './components/LetterCanvas';
 
 interface CardItem {
   id: string;
@@ -75,10 +76,39 @@ const INITIAL_CARDS: CardItem[] = [
   }
 ];
 
+// =========================================================================
+// 💌 KUSTOMISASI ISI SURAT (Ubah isi tulisan surat langsung di sini)
+// =========================================================================
+export const CUSTOM_LETTER = {
+  /** Inisial monogram di bawah buket bunga (kosongkan '' jika tidak ingin) */
+  monogram: 'S & E',
+  /** Judul utama dengan kaligrafi warna emas */
+  title: 'Happy Birthday',
+  /** Sapaan pembuka / nama penerima */
+  recipient: 'My Dearest Eleanor,',
+  /**
+   * Isi pesan surat ucapan.
+   * Gunakan Enter ganda (\n\n) untuk membuat paragraf baru.
+   */
+  message:
+    'Wishing you the most magical and beautiful birthday yet! May this coming year be filled with warmth, joy, laughter, and countless wonderful moments that make your heart happy.\n\nI hope today is surrounded by love and everything you cherish. You deserve all the happiness in the world.',
+  /** Kalimat penutup sebelum tanda tangan */
+  closing: 'With love always,',
+  /** Nama pengirim / tanda tangan */
+  signature: 'Sarah xo',
+  /** Teks cap pos di sudut kanan bawah */
+  stamp: 'AIR MAIL • 10 OCT',
+  /** Tampilkan ornamen pembatas ranting daun emas di antara paragraf */
+  showDivider: true,
+  /** Skala ukuran font (1.0 = normal, 1.1 = besar, 1.2 = ekstra besar) */
+  fontScale: 1.1,
+};
+
 export function App() {
   const [cards, setCards] = useState<CardItem[]>(INITIAL_CARDS);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
-  const [paperImage, setPaperImage] = useState<string>('/birthday-letter.jpg');
+  const [paperImage, setPaperImage] = useState<string>('/letter-template.png');
+  const [letterDataUrl, setLetterDataUrl] = useState<string>(paperImage);
   const paperFileInputRef = useRef<HTMLInputElement>(null);
   const popupFileInputRef = useRef<HTMLInputElement>(null);
 
@@ -375,13 +405,10 @@ export function App() {
           ======================================================== */}
       <section className="w-full flex flex-col items-center mb-20 relative overflow-hidden px-2 md:px-6">
         <div className="text-center mb-4 px-4 z-10 flex flex-col items-center">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF6100] bg-[#FF6100]/10 px-3.5 py-1 rounded-full border border-[#FF6100]/20 mb-2">
-            Section 2 • Interactive Paper & Ornaments
-          </span>
           <div className="relative inline-flex items-center justify-center my-1 px-8 py-2.5 sm:px-10 sm:py-3">
             <div className="absolute inset-0 paper-scrap-bg -rotate-[0.6deg] pointer-events-none" />
             <h2 className="relative z-10 text-[#2F2F2F] text-2xl sm:text-3xl md:text-4xl font-bold font-cormorant tracking-tight flex items-center justify-center">
-              <span className="gold-heading-gradient mr-1.5 sm:mr-2">Surat</span>Ucapan Interaktif
+              <span className="gold-heading-gradient mr-1.5 sm:mr-2">Suratnya</span>dibaca yah!
             </h2>
           </div>
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
@@ -432,16 +459,30 @@ export function App() {
         />
 
         {/* CONTAINER PANGGUNG INTERAKTIF DENGAN ORNAMEN LENGKAP */}
-        <div className="relative w-full max-w-5xl min-h-[620px] flex items-center justify-center my-2">
+        <div className="relative w-full max-w-5xl min-h-[680px] flex items-center justify-center my-2">
 
           {/* 2. SURAT 3D PAPER CRUMPLE (ROTATE KE KANAN CLOCKWISE) */}
           <div className="w-full flex justify-center items-center relative z-0">
+            <LetterCanvas
+              monogram={CUSTOM_LETTER.monogram}
+              title={CUSTOM_LETTER.title}
+              recipient={selectedCard ? (CUSTOM_LETTER.recipient || 'Sahabat Tersayang,') : CUSTOM_LETTER.recipient}
+              message={selectedCard ? selectedCard.backMessage : CUSTOM_LETTER.message}
+              closing={CUSTOM_LETTER.closing}
+              signature={selectedCard ? selectedCard.backSignature : CUSTOM_LETTER.signature}
+              stamp={selectedCard ? selectedCard.stampText : CUSTOM_LETTER.stamp}
+              showDivider={CUSTOM_LETTER.showDivider}
+              fontScale={CUSTOM_LETTER.fontScale}
+              backgroundSrc={paperImage}
+              dividerSrc="/gold-divider.png"
+              onRender={setLetterDataUrl}
+            />
             <PaperCrumple
-              src={paperImage}
+              src={letterDataUrl}
               alt="Surat Ucapan Ulang Tahun"
-              width={310}
-              height={470}
-              sceneHeight={600}
+              width={385}
+              height={560}
+              sceneHeight={680}
               rotation={-3.5} /* Rotate ke kanan clockwise */
               releaseBehavior="restore"
               crumpleAmount={0.85}
@@ -482,19 +523,14 @@ export function App() {
           <div className="absolute right-2 md:right-10 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2.5 z-20 pointer-events-auto scale-90 sm:scale-100 origin-right">
             {/* Polaroid 1 (Atas: Border Ungu / Lilac seperti referensi) */}
             <div
-              onClick={() => ornamentFileInputRef0.current?.click()}
-              className="group/p1 relative bg-white p-2 pb-3.5 shadow-xl border-2 border-purple-500 rounded-sm transform rotate-6 hover:rotate-0 hover:scale-110 hover:z-30 transition-all duration-300 cursor-pointer w-28 md:w-32"
-              title="Klik untuk ganti foto polaroid 1"
+              className="relative bg-white p-2 pb-3.5 shadow-xl border-2 border-purple-500 rounded-sm transform rotate-6 hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300 w-28 md:w-32 select-none"
             >
               <div className="w-full aspect-[4/3] bg-neutral-900 overflow-hidden relative">
                 <img
                   src={ornamentPhotos[0]}
                   alt="Polaroid 1"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pointer-events-none select-none"
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/p1:opacity-100 flex items-center justify-center transition-opacity text-white text-[9px] font-semibold">
-                  <Camera className="w-4 h-4" />
-                </div>
               </div>
               <div className="mt-1 text-center">
                 <span className="text-[8px] font-bold text-neutral-600 tracking-tight">Memories 💜</span>
@@ -503,19 +539,14 @@ export function App() {
 
             {/* Polaroid 2 (Tengah: Miring ke kiri) */}
             <div
-              onClick={() => ornamentFileInputRef1.current?.click()}
-              className="group/p2 relative bg-white p-2 pb-3.5 shadow-xl border border-neutral-300 rounded-sm transform -rotate-4 hover:rotate-0 hover:scale-110 hover:z-30 transition-all duration-300 cursor-pointer w-28 md:w-32"
-              title="Klik untuk ganti foto polaroid 2"
+              className="relative bg-white p-2 pb-3.5 shadow-xl border border-neutral-300 rounded-sm transform -rotate-4 hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300 w-28 md:w-32 select-none"
             >
               <div className="w-full aspect-[4/3] bg-neutral-900 overflow-hidden relative">
                 <img
                   src={ornamentPhotos[1]}
                   alt="Polaroid 2"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pointer-events-none select-none"
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/p2:opacity-100 flex items-center justify-center transition-opacity text-white text-[9px] font-semibold">
-                  <Camera className="w-4 h-4" />
-                </div>
               </div>
               <div className="mt-1 text-center">
                 <span className="text-[8px] font-bold text-neutral-600 tracking-tight">Sweet Moments ✨</span>
@@ -524,19 +555,14 @@ export function App() {
 
             {/* Polaroid 3 (Bawah: Miring ke kanan dengan ornamen hati) */}
             <div
-              onClick={() => ornamentFileInputRef2.current?.click()}
-              className="group/p3 relative bg-white p-2 pb-3.5 shadow-xl border border-neutral-300 rounded-sm transform rotate-4 hover:rotate-0 hover:scale-110 hover:z-30 transition-all duration-300 cursor-pointer w-28 md:w-32"
-              title="Klik untuk ganti foto polaroid 3"
+              className="relative bg-white p-2 pb-3.5 shadow-xl border border-neutral-300 rounded-sm transform rotate-4 hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300 w-28 md:w-32 select-none"
             >
               <div className="w-full aspect-[4/3] bg-neutral-900 overflow-hidden relative">
                 <img
                   src={ornamentPhotos[2]}
                   alt="Polaroid 3"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pointer-events-none select-none"
                 />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/p3:opacity-100 flex items-center justify-center transition-opacity text-white text-[9px] font-semibold">
-                  <Camera className="w-4 h-4" />
-                </div>
               </div>
               <div className="mt-1 flex items-center justify-center gap-1">
                 <span className="text-[8px] font-bold text-neutral-600 tracking-tight">Forever & Ever</span>
@@ -546,27 +572,25 @@ export function App() {
           </div>
         </div>
 
-        {/* Action Buttons & Petunjuk Section 1 */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mt-4 px-4 text-center z-10">
-          <button
-            onClick={() => paperFileInputRef.current?.click()}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#2F2F2F] bg-white border border-neutral-300 hover:border-[#FF6100] hover:text-[#FF6100] shadow-sm transition-all"
-          >
-            <ImageIcon className="w-3.5 h-3.5" />
-            <span>Ganti Gambar Surat</span>
-          </button>
 
-          <button
-            onClick={() => setPaperResetKey(k => k + 1)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium text-[#2F2F2F] bg-white border border-neutral-300 hover:border-[#FF6100] hover:text-[#FF6100] shadow-sm transition-all"
-            title="Kembalikan posisi kertas ke tengah"
-          >
-            <RotateCw className="w-3.5 h-3.5" />
-            <span>Reset Posisi Tengah</span>
-          </button>
 
+        {selectedCard && (
+          <div className="mt-1 mb-2 px-4 py-1.5 bg-amber-50 border border-amber-200/80 rounded-full text-xs text-amber-900 flex items-center gap-2 shadow-sm animate-in fade-in duration-200">
+            <span>Menampilkan pesan dari kartu: <strong>{selectedCard.title}</strong></span>
+            <button
+              type="button"
+              onClick={() => setSelectedCardId(null)}
+              className="text-[#FF6100] hover:underline font-semibold ml-1 cursor-pointer"
+            >
+              (Kembali ke Surat Utama)
+            </button>
+          </div>
+        )}
+
+        {/* Petunjuk Interaksi Section 2 */}
+        <div className="flex flex-wrap items-center justify-center mt-2 px-4 text-center z-10">
           <span className="text-xs text-[#2F2F2F]/60">
-            • Tahan & seret buket bunga • Klik kartu polaroid untuk ganti foto • Tahan kertas untuk remas 3D
+            • Tahan & seret buket bunga • Tahan kertas untuk remas 3D
           </span>
         </div>
 
@@ -586,13 +610,10 @@ export function App() {
           ======================================================== */}
       <section className="w-full max-w-4xl flex flex-col items-center pt-10 relative border-t border-amber-900/15">
         <div className="text-center mb-2 flex flex-col items-center">
-          <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF6100] bg-[#FF6100]/10 px-3.5 py-1 rounded-full border border-[#FF6100]/20 mb-2">
-            Section 3 • Memory Letter 💌
-          </span>
           <div className="relative inline-flex items-center justify-center my-1 px-8 py-2.5 sm:px-10 sm:py-3">
             <div className="absolute inset-0 paper-scrap-bg rotate-[0.6deg] pointer-events-none" />
             <h2 className="relative z-10 text-[#2F2F2F] text-2xl sm:text-3xl md:text-4xl font-bold font-cormorant tracking-tight flex items-center justify-center">
-              <span className="gold-heading-gradient mr-1.5 sm:mr-2">Surat</span>Foto Polaroid
+              <span className="gold-heading-gradient mr-1.5 sm:mr-2">buka</span> mail ini
             </h2>
           </div>
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
@@ -848,6 +869,8 @@ export function App() {
           </div>
         </div>
       )}
+
+
     </div>
   );
 }
