@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Folder from './components/Folder';
 import FlipCard from './components/FlipCard';
@@ -175,11 +175,11 @@ function SectionHeading({
 }
 
 export function App() {
-  const [cards, setCards] = useState<CardItem[]>(INITIAL_CARDS);
+  const [cards] = useState<CardItem[]>(INITIAL_CARDS);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [paperImage, setPaperImage] = useState<string>('/letter-template.png');
   const [letterDataUrl, setLetterDataUrl] = useState<string>(paperImage);
-  const [ornamentPhotos, setOrnamentPhotos] = useState<string[]>([
+  const [ornamentPhotos] = useState<string[]>([
     '/photobox-batik.jpeg',
     '/photobox-almet.jpeg',
     '/photobox-bunga.jpeg'
