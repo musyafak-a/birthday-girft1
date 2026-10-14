@@ -304,7 +304,7 @@ export function App() {
                   paintOrder: 'stroke fill',
                 }}
               >
-                J
+                D
               </span>
               <span
                 className="font-public-sans font-black tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0"
@@ -314,7 +314,7 @@ export function App() {
                   paintOrder: 'stroke fill',
                 }}
               >
-                ude
+                ian
               </span>
             </div>
 
@@ -328,7 +328,7 @@ export function App() {
                   paintOrder: 'stroke fill',
                 }}
               >
-                29
+                21
               </span>
               <span
                 className="font-my-soul text-5xl sm:text-6xl md:text-7xl leading-none inline-block -ml-4 sm:-ml-5 relative z-10"
@@ -354,7 +354,7 @@ export function App() {
                   <div className="w-7 h-7 rounded-full bg-neutral-300 flex-shrink-0" />
                   {/* Username */}
                   <span className="text-xs font-semibold text-neutral-800 tracking-tight">
-                    username_
+                    watasiwadisa_
                   </span>
                 </div>
                 {/* More button */}
@@ -452,7 +452,7 @@ export function App() {
               {/* Caption & Verified Badge */}
               <div className="px-0.5 pt-0.5 text-left">
                 <p className="text-[11px] sm:text-xs text-neutral-800 leading-snug">
-                  <span className="font-semibold text-neutral-900 mr-1">username_</span>
+                  <span className="font-semibold text-neutral-900 mr-1">watasiwadisa_</span>
                   {/* Official Instagram Verified Badge */}
                   <svg
                     className="w-3 h-3 text-[#0095F6] inline-block mr-1.5 align-middle"

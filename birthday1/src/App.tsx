@@ -4,8 +4,22 @@ import Folder from './components/Folder';
 import FlipCard from './components/FlipCard';
 import PaperCrumple from './components/PaperCrumple';
 import FallingPetals from './components/FallingPetals';
-import { Camera, X, RotateCw, Sparkles, ChevronDown, Image as ImageIcon, Heart, MessageCircle, Repeat2, Send, Bookmark, MoreHorizontal } from 'lucide-react';
+import {
+  Camera,
+  X,
+  RotateCw,
+  Sparkles,
+  ChevronDown,
+  Heart,
+  MessageCircle,
+  Repeat2,
+  Send,
+  Bookmark,
+  MoreHorizontal
+} from 'lucide-react';
 import { LetterCanvas } from './components/LetterCanvas';
+
+const USERNAME = 'watasiwadisa_';
 
 interface CardItem {
   id: string;
@@ -24,7 +38,7 @@ const INITIAL_CARDS: CardItem[] = [
     title: 'Foto 1: Ucapan Selamat',
     caption: 'Momen Spesial Ulang Tahun 🎉',
     date: '10.10.2026',
-    image: null,
+    image: '/fotosurat1.jpeg',
     backMessage:
       'Selamat ulang tahun! Semoga di hari yang istimewa ini, setiap doa dan impian terindahmu menjadi kenyataan. Terima kasih telah selalu membawa tawa dan kehangatan bagi semua orang di sekitarmu! ✨🎂',
     backSignature: 'Sahabat Terbaikmu 💌',
@@ -35,7 +49,7 @@ const INITIAL_CARDS: CardItem[] = [
     title: 'Foto 2: Kenangan Kita',
     caption: 'Tawa & Cerita Indah 💖',
     date: 'Memori Abadi',
-    image: null,
+    image: '/fotosurat2.jpeg',
     backMessage:
       'Setiap petualangan, canda tawa, dan cerita yang kita lalui bersama adalah kenangan yang tak ternilai harganya. Mari kita ciptakan lebih banyak cerita seru di tahun-tahun mendatang! 📸💫',
     backSignature: 'Kenangan Manis 💖',
@@ -46,7 +60,7 @@ const INITIAL_CARDS: CardItem[] = [
     title: 'Foto 3: Harapan & Doa',
     caption: 'Semoga Bahagia Selalu 🌟',
     date: '',
-    image: null,
+    image: '/fotosurat3.jpeg',
     backMessage:
       'Doa tulus untuk umur barumu: semoga senantiasa dilimpahkan kesehatan yang prima, rezeki yang berkah melimpah, dan ketenangan jiwa dalam setiap langkah perjalanan hidupmu! :)',
     backSignature: '',
@@ -57,7 +71,7 @@ const INITIAL_CARDS: CardItem[] = [
     title: 'Foto 4: Soundtrack Bahagia',
     caption: 'Melodi Perayaan Spesial 🎵',
     date: 'Playlist 2026',
-    image: null,
+    image: '/fotosurat4.jpeg',
     backMessage:
       'Hidup adalah simfoni yang indah. Biarkan lagu-lagu keceriaan selalu berputar menemani hari-harimu. Jangan pernah berhenti berdansa dan menikmati melodi kebahagiaan! 🎧🎶',
     backSignature: 'Putar Musik Favoritmu 🎵',
@@ -68,7 +82,7 @@ const INITIAL_CARDS: CardItem[] = [
     title: 'Foto 5: Hadiah Spesial',
     caption: 'Kejutan Manis Buatmu 🎁',
     date: 'Hari Bahagia',
-    image: null,
+    image: '/fotosurat5.jpeg',
     backMessage:
       'Hadiah terbesar adalah kehangatan orang-orang tersayang. Namun sebuah kejutan manis telah dipersiapkan spesial untuk merayakan senyum manismu hari ini! Buka dan nikmati! 🎉🎁',
     backSignature: 'Kado Rahasia 🎁',
@@ -85,73 +99,106 @@ export const CUSTOM_LETTER = {
   /** Judul utama dengan kaligrafi warna emas */
   title: 'Happy Birthday',
   /** Sapaan pembuka / nama penerima */
-  recipient: 'My Dearest Eleanor,',
-  /**
-   * Isi pesan surat ucapan.
-   * Gunakan Enter ganda (\n\n) untuk membuat paragraf baru.
-   */
+  recipient: 'My Dearest Dian,',
+  /** Isi pesan surat ucapan */
   message:
-    'Wishing you the most magical and beautiful birthday yet! May this coming year be filled with warmth, joy, laughter, and countless wonderful moments that make your heart happy.\n\nI hope today is surrounded by love and everything you cherish. You deserve all the happiness in the world.',
+    'Di hari spesialmu ini, tarik napas dulu sebentar ya. Semoga di usia baru ini, semua usahamu terbayar lunas dengan nilai ujian yang memuaskan, rezeki lancar sampai tiap minggu bisa ndaki gunung baru.\nAku tahu belakangan ini kamu lagi struggle banget hadapin musim ujian dan deretan angka yang nggak ada habisnya. Tapi lihat kamu tetap bertahan dan berusaha keras sampai detik ini bikin aku bangga luar bias.',
   /** Kalimat penutup sebelum tanda tangan */
-  closing: 'With love always,',
+  closing: 'With love,',
   /** Nama pengirim / tanda tangan */
-  signature: 'Sarah xo',
+  signature: 'your man',
   /** Teks cap pos di sudut kanan bawah */
   stamp: 'AIR MAIL • 10 OCT',
   /** Tampilkan ornamen pembatas ranting daun emas di antara paragraf */
   showDivider: true,
   /** Skala ukuran font (1.0 = normal, 1.1 = besar, 1.2 = ekstra besar) */
-  fontScale: 1.1,
+  fontScale: 1.1
 };
+
+// Konfigurasi 3 polaroid ornamen di samping surat
+const ORNAMENT_CONFIGS = [
+  {
+    label: 'Memories 💜',
+    rotation: 'rotate-6',
+    borderClass: 'border-2 border-purple-500',
+    objectPosition: 'object-center'
+  },
+  {
+    label: 'Sweet Moments ✨',
+    rotation: '-rotate-4',
+    borderClass: 'border border-neutral-300',
+    objectPosition: 'object-[center_15%]'
+  },
+  {
+    label: 'Forever & Ever 💖',
+    rotation: 'rotate-4',
+    borderClass: 'border border-neutral-300',
+    objectPosition: 'object-[center_30%]'
+  }
+];
+
+// Reusable Official Instagram Verified Badge
+function VerifiedBadge({ className = 'w-3 h-3 text-[#0095F6] inline-block mr-1.5 align-middle' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 40 40" fill="none">
+      <path
+        d="M19.998 3.333c1.373 0 2.68.567 3.633 1.554l1.45 1.503c.576.597 1.345.98 2.181 1.071l2.08.228c1.365.15 2.584.887 3.313 1.999.728 1.113.882 2.479.418 3.714l-.707 1.882c-.285.759-.285 1.597 0 2.356l.707 1.882c.464 1.235.31 2.601-.418 3.714-.729 1.112-1.948 1.849-3.313 1.999l-2.08.228c-.836.091-1.605.474-2.181 1.071l-1.45 1.503c-.953.987-2.26 1.554-3.633 1.554s-2.68-.567-3.633-1.554l-1.45-1.503c-.576-.597-1.345-.98-2.181-1.071l-2.08-.228c-1.365-.15-2.584-.887-3.313-1.999-.728-1.113-.882-2.479-.418-3.714l.707-1.882c.285-.759.285-1.597 0-2.356l-.707-1.882c-.464-1.235-.31-2.601.418-3.714.729-1.112 1.948-1.849 3.313-1.999l2.08-.228c.836-.091 1.605-.474 2.181-1.071l1.45-1.503c.953-.987 2.26-1.554 3.633-1.554z"
+        fill="#0095F6"
+      />
+      <path d="M17.5 24.5l-5-5 1.77-1.77 3.23 3.23 7.73-7.73 1.77 1.77-9.5 9.5z" fill="#FFFFFF" />
+    </svg>
+  );
+}
+
+// Reusable Section Heading with Torn Paper Scrap Background
+function SectionHeading({
+  goldWord,
+  text,
+  rotate = 0.6
+}: {
+  goldWord: string;
+  text: string;
+  rotate?: number;
+}) {
+  return (
+    <div className="relative inline-flex items-center justify-center my-1 px-8 py-2.5 sm:px-10 sm:py-3">
+      <div
+        className="absolute inset-0 paper-scrap-bg pointer-events-none"
+        style={{ transform: `rotate(${rotate}deg)` }}
+      />
+      <h2 className="relative z-10 text-[#2F2F2F] text-2xl sm:text-3xl md:text-4xl font-bold font-cormorant tracking-tight flex items-center justify-center">
+        <span className="gold-heading-gradient mr-1.5 sm:mr-2">{goldWord}</span>
+        {text}
+      </h2>
+    </div>
+  );
+}
 
 export function App() {
   const [cards, setCards] = useState<CardItem[]>(INITIAL_CARDS);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [paperImage, setPaperImage] = useState<string>('/letter-template.png');
   const [letterDataUrl, setLetterDataUrl] = useState<string>(paperImage);
-  const paperFileInputRef = useRef<HTMLInputElement>(null);
-  const popupFileInputRef = useRef<HTMLInputElement>(null);
-
-  const selectedCard = cards.find(c => c.id === selectedCardId) || null;
-
-  const [paperResetKey, setPaperResetKey] = useState(0);
   const [ornamentPhotos, setOrnamentPhotos] = useState<string[]>([
-    '/ornament-photo-1.png',
-    '/ornament-photo-2.png',
-    '/ornament-photo-3.png'
+    '/photobox-batik.jpeg',
+    '/photobox-almet.jpeg',
+    '/photobox-bunga.jpeg'
   ]);
-  const ornamentFileInputRef0 = useRef<HTMLInputElement>(null);
-  const ornamentFileInputRef1 = useRef<HTMLInputElement>(null);
-  const ornamentFileInputRef2 = useRef<HTMLInputElement>(null);
 
-  // Instagram Card State
+  // Instagram Card Interactivity
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
 
-  // Handle upload foto untuk kartu tertentu
-  const handlePhotoUpload = (id: string, file: File) => {
-    const url = URL.createObjectURL(file);
-    setCards(prev =>
-      prev.map(c => (c.id === id ? { ...c, image: url } : c))
-    );
-  };
+  // File Input References
+  const paperFileInputRef = useRef<HTMLInputElement>(null);
 
-  // Handle upload foto untuk ornamen polaroid di samping surat
-  const handleOrnamentPhotoUpload = (index: number, file: File) => {
-    const url = URL.createObjectURL(file);
-    setOrnamentPhotos(prev => {
-      const copy = [...prev];
-      copy[index] = url;
-      return copy;
-    });
-  };
+  const selectedCard = cards.find(c => c.id === selectedCardId) || null;
 
   // Handle upload gambar untuk PaperCrumple
   const handlePaperImageUpload = (file: File) => {
     const url = URL.createObjectURL(file);
     setPaperImage(url);
   };
-
 
   // Keyboard shortcut ESC to close popup
   useEffect(() => {
@@ -168,6 +215,7 @@ export function App() {
     <div className="flex flex-col items-center justify-start min-h-screen page-looping-bg pb-24 selection:bg-[#FF6100]/20 selection:text-[#2F2F2F] relative overflow-x-hidden w-full">
       {/* Kelopak Bunga Jatuh Melayang Looping 1 Halaman Penuh */}
       <FallingPetals />
+
       {/* ========================================================
           SECTION 1: HERO BEACH + INSTAGRAM POST CARD
           ======================================================== */}
@@ -191,60 +239,43 @@ export function App() {
 
         {/* Instagram Post Card with 3D Popout Effect & Floating Typography */}
         <div className="relative z-20 flex items-center justify-center w-full px-4 pointer-events-auto">
-          {/* Card & Floating Typography Wrapper */}
           <div className="relative flex items-center justify-center">
             {/* Top Left: Happy */}
             <div className="absolute -top-16 sm:-top-20 md:-top-24 -left-12 sm:-left-36 md:-left-56 lg:-left-64 z-30 pointer-events-none select-none rotate-[-8deg] flex items-baseline">
-              <span
-                className="font-my-soul text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none inline-block relative z-10 watercolor-gold watercolor-filter"
-              >
+              <span className="font-my-soul text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none inline-block relative z-10 watercolor-gold watercolor-filter">
                 H
               </span>
-              <span
-                className="font-merriweather font-normal tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0 watercolor-gold watercolor-filter"
-              >
+              <span className="font-merriweather font-normal tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0 watercolor-gold watercolor-filter">
                 appy
               </span>
             </div>
 
             {/* Top Right: Birthday!! */}
             <div className="absolute -top-12 sm:-top-16 md:-top-20 -right-12 sm:-right-36 md:-right-56 lg:-right-64 z-30 pointer-events-none select-none rotate-[6deg] flex items-baseline">
-              <span
-                className="font-my-soul text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none inline-block relative z-10 watercolor-gold watercolor-filter"
-              >
+              <span className="font-my-soul text-6xl sm:text-7xl md:text-8xl lg:text-9xl leading-none inline-block relative z-10 watercolor-gold watercolor-filter">
                 B
               </span>
-              <span
-                className="font-merriweather font-normal tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0 watercolor-gold watercolor-filter"
-              >
+              <span className="font-merriweather font-normal tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0 watercolor-gold watercolor-filter">
                 irthday!!
               </span>
             </div>
 
             {/* Bottom Left: Jude */}
             <div className="absolute -bottom-8 sm:-bottom-12 -left-8 sm:-left-24 md:-left-36 z-30 pointer-events-none select-none rotate-[-6deg] flex items-baseline">
-              <span
-                className="font-my-soul text-7xl sm:text-8xl md:text-9xl leading-none inline-block relative z-10 watercolor-pink watercolor-filter"
-              >
-                J
+              <span className="font-my-soul text-7xl sm:text-8xl md:text-9xl leading-none inline-block relative z-10 watercolor-pink watercolor-filter">
+                D
               </span>
-              <span
-                className="font-merriweather font-normal tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0 watercolor-pink watercolor-filter"
-              >
-                ude
+              <span className="font-merriweather font-normal tracking-tight text-4xl sm:text-5xl md:text-6xl lg:text-7xl -ml-2 sm:-ml-3 leading-none inline-block relative z-0 watercolor-pink watercolor-filter">
+                ian
               </span>
             </div>
 
-            {/* Bottom Right: 29 y.o */}
+            {/* Bottom Right: 21 y.o */}
             <div className="absolute -bottom-8 sm:-bottom-12 -right-8 sm:-right-24 md:-right-36 z-30 pointer-events-none select-none rotate-[8deg] flex items-baseline">
-              <span
-                className="font-merriweather font-normal tracking-tight text-5xl sm:text-6xl md:text-7xl leading-none inline-block relative z-0 watercolor-pink watercolor-filter"
-              >
-                29
+              <span className="font-merriweather font-normal tracking-tight text-5xl sm:text-6xl md:text-7xl leading-none inline-block relative z-0 watercolor-pink watercolor-filter">
+                21
               </span>
-              <span
-                className="font-my-soul text-5xl sm:text-6xl md:text-7xl leading-none inline-block -ml-4 sm:-ml-5 relative z-10 watercolor-pink watercolor-filter"
-              >
+              <span className="font-my-soul text-5xl sm:text-6xl md:text-7xl leading-none inline-block -ml-4 sm:-ml-5 relative z-10 watercolor-pink watercolor-filter">
                 y.o
               </span>
             </div>
@@ -257,14 +288,11 @@ export function App() {
               {/* Header: Avatar, Username, More */}
               <div className="flex items-center justify-between pb-2.5 px-0.5">
                 <div className="flex items-center gap-2">
-                  {/* Avatar Circle */}
                   <div className="w-7 h-7 rounded-full bg-neutral-300 flex-shrink-0" />
-                  {/* Username */}
                   <span className="text-xs font-semibold text-neutral-800 tracking-tight">
-                    username_
+                    {USERNAME}
                   </span>
                 </div>
-                {/* More button */}
                 <button
                   type="button"
                   className="text-neutral-700 hover:text-black p-0.5 transition-colors focus:outline-none"
@@ -276,24 +304,24 @@ export function App() {
 
               {/* Photo Frame Container (Tanpa stroke / border) */}
               <div className="relative w-full h-[295px] sm:h-[320px] rounded-[2px] bg-neutral-100 overflow-visible">
-                {/* 1. Base Photo (Frame 2.png) - Clipped strictly inside frame */}
+                {/* 1. Base Photo (dian-bg.jpeg) - Clipped strictly inside frame */}
                 <div className="absolute inset-0 overflow-hidden rounded-[2px]">
                   <img
-                    src="/Frame 2.png"
+                    src="/dian-bg.jpeg"
                     alt="Base Photo"
                     className="w-full absolute left-0 top-[-92px] object-cover pointer-events-none select-none"
                   />
                 </div>
 
-                {/* 2. Popout Subject (Frame 2s.png) - Top side pops out, left and right sides cropped to frame */}
+                {/* 2. Popout Subject (dian-nobg.png) - Top side pops out, left and right sides cropped to frame */}
                 <div
                   className="absolute inset-0 pointer-events-none select-none z-10"
                   style={{ clipPath: 'inset(-180px 0 0 0)' }}
                 >
                   <img
-                    src="/Frame 2s.png"
+                    src="/dian-nobg.png"
                     alt="Popout Subject"
-                    className="w-full absolute left-0 top-[-92px] object-cover pointer-events-none select-none"
+                    className="w-full absolute left-0 top-[-92px] object-cover pointer-events-none select-none scale-[1.35] origin-bottom"
                   />
                 </div>
               </div>
@@ -301,7 +329,6 @@ export function App() {
               {/* Action Buttons: Liked, Comment, Repost, Share, Bookmark */}
               <div className="flex items-center justify-between pt-2.5 pb-1 px-0.5">
                 <div className="flex items-center gap-3 text-neutral-800">
-                  {/* Liked */}
                   <button
                     type="button"
                     onClick={() => setIsLiked(prev => !prev)}
@@ -314,7 +341,6 @@ export function App() {
                     />
                   </button>
 
-                  {/* Comment */}
                   <button
                     type="button"
                     className="hover:text-neutral-600 transition-colors focus:outline-none"
@@ -323,7 +349,6 @@ export function App() {
                     <MessageCircle className="w-[19px] h-[19px]" />
                   </button>
 
-                  {/* Repost */}
                   <button
                     type="button"
                     className="hover:text-neutral-600 transition-colors focus:outline-none"
@@ -332,7 +357,6 @@ export function App() {
                     <Repeat2 className="w-[19px] h-[19px]" />
                   </button>
 
-                  {/* Share */}
                   <button
                     type="button"
                     className="hover:text-neutral-600 transition-colors focus:outline-none"
@@ -342,7 +366,6 @@ export function App() {
                   </button>
                 </div>
 
-                {/* Bookmark */}
                 <button
                   type="button"
                   onClick={() => setIsBookmarked(prev => !prev)}
@@ -359,28 +382,14 @@ export function App() {
               {/* Caption & Verified Badge */}
               <div className="px-0.5 pt-0.5 text-left">
                 <p className="text-[11px] sm:text-xs text-neutral-800 leading-snug">
-                  <span className="font-semibold text-neutral-900 mr-1">username_</span>
-                  {/* Official Instagram Verified Badge */}
-                  <svg
-                    className="w-3 h-3 text-[#0095F6] inline-block mr-1.5 align-middle"
-                    viewBox="0 0 40 40"
-                    fill="none"
-                  >
-                    <path
-                      d="M19.998 3.333c1.373 0 2.68.567 3.633 1.554l1.45 1.503c.576.597 1.345.98 2.181 1.071l2.08.228c1.365.15 2.584.887 3.313 1.999.728 1.113.882 2.479.418 3.714l-.707 1.882c-.285.759-.285 1.597 0 2.356l.707 1.882c.464 1.235.31 2.601-.418 3.714-.729 1.112-1.948 1.849-3.313 1.999l-2.08.228c-.836.091-1.605.474-2.181 1.071l-1.45 1.503c-.953.987-2.26 1.554-3.633 1.554s-2.68-.567-3.633-1.554l-1.45-1.503c-.576-.597-1.345-.98-2.181-1.071l-2.08-.228c-1.365-.15-2.584-.887-3.313-1.999-.728-1.113-.882-2.479-.418-3.714l.707-1.882c.285-.759.285-1.597 0-2.356l-.707-1.882c-.464-1.235-.31-2.601.418-3.714.729-1.112 1.948-1.849 3.313-1.999l2.08-.228c.836-.091 1.605-.474 2.181-1.071l1.45-1.503c.953-.987 2.26-1.554 3.633-1.554z"
-                      fill="#0095F6"
-                    />
-                    <path
-                      d="M17.5 24.5l-5-5 1.77-1.77 3.23 3.23 7.73-7.73 1.77 1.77-9.5 9.5z"
-                      fill="#FFFFFF"
-                    />
-                  </svg>
+                  <span className="font-semibold text-neutral-900 mr-1">{USERNAME}</span>
+                  <VerifiedBadge />
                   <span className="text-neutral-700">lorem ipsum dolor sit amet</span>
                 </p>
               </div>
             </div>
 
-            {/* Draggable Bouquet (Buket Bunga Satunya - bouquet2.png) */}
+            {/* Draggable Bouquet */}
             <motion.div
               drag
               dragMomentum={false}
@@ -405,18 +414,13 @@ export function App() {
           ======================================================== */}
       <section className="w-full flex flex-col items-center mb-20 relative overflow-hidden px-2 md:px-6">
         <div className="text-center mb-4 px-4 z-10 flex flex-col items-center">
-          <div className="relative inline-flex items-center justify-center my-1 px-8 py-2.5 sm:px-10 sm:py-3">
-            <div className="absolute inset-0 paper-scrap-bg -rotate-[0.6deg] pointer-events-none" />
-            <h2 className="relative z-10 text-[#2F2F2F] text-2xl sm:text-3xl md:text-4xl font-bold font-cormorant tracking-tight flex items-center justify-center">
-              <span className="gold-heading-gradient mr-1.5 sm:mr-2">Suratnya</span>dibaca yah!
-            </h2>
-          </div>
+          <SectionHeading goldWord="Suratnya" text="dibaca yah!" rotate={-0.6} />
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
             Surat diputar ke kanan dengan ornamen polaroid foto, buket bunga, dan kelopak bunga bertaburan!
           </p>
         </div>
 
-        {/* Hidden inputs untuk upload foto ornamen */}
+        {/* Hidden input untuk upload gambar paper */}
         <input
           ref={paperFileInputRef}
           type="file"
@@ -427,46 +431,15 @@ export function App() {
             if (file) handlePaperImageUpload(file);
           }}
         />
-        <input
-          ref={ornamentFileInputRef0}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={e => {
-            const file = e.target.files?.[0];
-            if (file) handleOrnamentPhotoUpload(0, file);
-          }}
-        />
-        <input
-          ref={ornamentFileInputRef1}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={e => {
-            const file = e.target.files?.[0];
-            if (file) handleOrnamentPhotoUpload(1, file);
-          }}
-        />
-        <input
-          ref={ornamentFileInputRef2}
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={e => {
-            const file = e.target.files?.[0];
-            if (file) handleOrnamentPhotoUpload(2, file);
-          }}
-        />
 
-        {/* CONTAINER PANGGUNG INTERAKTIF DENGAN ORNAMEN LENGKAP */}
+        {/* Panggung Interaktif Surat & Ornamen */}
         <div className="relative w-full max-w-5xl min-h-[680px] flex items-center justify-center my-2">
-
-          {/* 2. SURAT 3D PAPER CRUMPLE (ROTATE KE KANAN CLOCKWISE) */}
+          {/* 3D Paper Crumple Letter */}
           <div className="w-full flex justify-center items-center relative z-0">
             <LetterCanvas
               monogram={CUSTOM_LETTER.monogram}
               title={CUSTOM_LETTER.title}
-              recipient={selectedCard ? (CUSTOM_LETTER.recipient || 'Sahabat Tersayang,') : CUSTOM_LETTER.recipient}
+              recipient={selectedCard ? CUSTOM_LETTER.recipient || 'Sahabat Tersayang,' : CUSTOM_LETTER.recipient}
               message={selectedCard ? selectedCard.backMessage : CUSTOM_LETTER.message}
               closing={CUSTOM_LETTER.closing}
               signature={selectedCard ? selectedCard.backSignature : CUSTOM_LETTER.signature}
@@ -483,7 +456,7 @@ export function App() {
               width={385}
               height={560}
               sceneHeight={680}
-              rotation={-3.5} /* Rotate ke kanan clockwise */
+              rotation={-3.5}
               releaseBehavior="restore"
               crumpleAmount={0.85}
               crumpleDuration={0.55}
@@ -497,12 +470,12 @@ export function App() {
               draggable={true}
               dragRadius={3000}
               returnToOrigin={false}
-              resetKey={paperResetKey}
+              resetKey={0}
               className="w-full"
             />
           </div>
 
-          {/* 3. ORNAMEN BUKET BUNGA (DI SUDUT KIRI BAWAH SURAT - DRAGGABLE & SCALE BESAR) */}
+          {/* Ornamen Buket Bunga */}
           <motion.div
             drag
             dragMomentum={false}
@@ -519,64 +492,35 @@ export function App() {
             />
           </motion.div>
 
-          {/* 4. ORNAMEN POLAROID FOTO (DI SISI KANAN SURAT BERTINGKAT ROTASI) */}
+          {/* Ornamen Polaroid Bertingkat */}
           <div className="absolute right-2 md:right-10 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2.5 z-20 pointer-events-auto scale-90 sm:scale-100 origin-right">
-            {/* Polaroid 1 (Atas: Border Ungu / Lilac seperti referensi) */}
-            <div
-              className="relative bg-white p-2 pb-3.5 shadow-xl border-2 border-purple-500 rounded-sm transform rotate-6 hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300 w-28 md:w-32 select-none"
-            >
-              <div className="w-full aspect-[4/3] bg-neutral-900 overflow-hidden relative">
-                <img
-                  src={ornamentPhotos[0]}
-                  alt="Polaroid 1"
-                  className="w-full h-full object-cover pointer-events-none select-none"
-                />
+            {ORNAMENT_CONFIGS.map((config, index) => (
+              <div
+                key={index}
+                className={`relative bg-white p-2 pb-3.5 shadow-xl ${config.borderClass} rounded-sm transform ${config.rotation} hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300 w-28 md:w-32 select-none`}
+              >
+                <div className="w-full aspect-[4/3] bg-neutral-900 overflow-hidden relative">
+                  <img
+                    src={ornamentPhotos[index]}
+                    alt={config.label}
+                    className={`w-full h-full object-cover pointer-events-none select-none ${config.objectPosition}`}
+                  />
+                </div>
+                <div className="mt-1 text-center">
+                  <span className="text-[8px] font-bold text-neutral-600 tracking-tight">
+                    {config.label}
+                  </span>
+                </div>
               </div>
-              <div className="mt-1 text-center">
-                <span className="text-[8px] font-bold text-neutral-600 tracking-tight">Memories 💜</span>
-              </div>
-            </div>
-
-            {/* Polaroid 2 (Tengah: Miring ke kiri) */}
-            <div
-              className="relative bg-white p-2 pb-3.5 shadow-xl border border-neutral-300 rounded-sm transform -rotate-4 hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300 w-28 md:w-32 select-none"
-            >
-              <div className="w-full aspect-[4/3] bg-neutral-900 overflow-hidden relative">
-                <img
-                  src={ornamentPhotos[1]}
-                  alt="Polaroid 2"
-                  className="w-full h-full object-cover pointer-events-none select-none"
-                />
-              </div>
-              <div className="mt-1 text-center">
-                <span className="text-[8px] font-bold text-neutral-600 tracking-tight">Sweet Moments ✨</span>
-              </div>
-            </div>
-
-            {/* Polaroid 3 (Bawah: Miring ke kanan dengan ornamen hati) */}
-            <div
-              className="relative bg-white p-2 pb-3.5 shadow-xl border border-neutral-300 rounded-sm transform rotate-4 hover:rotate-0 hover:scale-105 hover:z-30 transition-all duration-300 w-28 md:w-32 select-none"
-            >
-              <div className="w-full aspect-[4/3] bg-neutral-900 overflow-hidden relative">
-                <img
-                  src={ornamentPhotos[2]}
-                  alt="Polaroid 3"
-                  className="w-full h-full object-cover pointer-events-none select-none"
-                />
-              </div>
-              <div className="mt-1 flex items-center justify-center gap-1">
-                <span className="text-[8px] font-bold text-neutral-600 tracking-tight">Forever & Ever</span>
-                <span className="text-[9px] text-[#FF6100]">💖</span>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
-
-
         {selectedCard && (
           <div className="mt-1 mb-2 px-4 py-1.5 bg-amber-50 border border-amber-200/80 rounded-full text-xs text-amber-900 flex items-center gap-2 shadow-sm animate-in fade-in duration-200">
-            <span>Menampilkan pesan dari kartu: <strong>{selectedCard.title}</strong></span>
+            <span>
+              Menampilkan pesan dari kartu: <strong>{selectedCard.title}</strong>
+            </span>
             <button
               type="button"
               onClick={() => setSelectedCardId(null)}
@@ -587,14 +531,14 @@ export function App() {
           </div>
         )}
 
-        {/* Petunjuk Interaksi Section 2 */}
+        {/* Petunjuk Interaksi */}
         <div className="flex flex-wrap items-center justify-center mt-2 px-4 text-center z-10">
           <span className="text-xs text-[#2F2F2F]/60">
             • Tahan & seret buket bunga • Tahan kertas untuk remas 3D
           </span>
         </div>
 
-        {/* Petunjuk Scroll ke Section Folder / Surat */}
+        {/* Petunjuk Scroll ke Bawah */}
         <div className="flex flex-col items-center gap-1 mt-10 text-[#FF6100] z-10">
           <span className="text-xs font-semibold tracking-wide">
             Scroll ke bawah untuk melihat Surat Kenangan 💌
@@ -610,12 +554,7 @@ export function App() {
           ======================================================== */}
       <section className="w-full max-w-4xl flex flex-col items-center pt-10 relative border-t border-amber-900/15">
         <div className="text-center mb-2 flex flex-col items-center">
-          <div className="relative inline-flex items-center justify-center my-1 px-8 py-2.5 sm:px-10 sm:py-3">
-            <div className="absolute inset-0 paper-scrap-bg rotate-[0.6deg] pointer-events-none" />
-            <h2 className="relative z-10 text-[#2F2F2F] text-2xl sm:text-3xl md:text-4xl font-bold font-cormorant tracking-tight flex items-center justify-center">
-              <span className="gold-heading-gradient mr-1.5 sm:mr-2">buka</span> mail ini
-            </h2>
-          </div>
+          <SectionHeading goldWord="buka" text="mail ini" rotate={0.6} />
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
             Arahkan kursor untuk mengintip, klik amplop untuk membuka seluruh foto!
           </p>
@@ -627,82 +566,59 @@ export function App() {
             color="#E5D5B8"
             backColor="#F1E5CF"
             size={1.05}
-            items={cards.map(card => {
-              const cardFileInputRef = React.createRef<HTMLInputElement>();
-
-              const handleCardClick = (e: React.MouseEvent) => {
-                e.stopPropagation();
-                setSelectedCardId(card.id);
-              };
-
-              const handleCardFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-                const file = e.target.files?.[0];
-                if (file) {
-                  handlePhotoUpload(card.id, file);
-                }
-              };
-
-              return (
-                <div
-                  key={card.id}
-                  onClick={handleCardClick}
-                  className="w-full h-full bg-white p-2.5 pb-4 flex flex-col justify-between select-none shadow-md border border-neutral-300 rounded-none relative group/item cursor-pointer"
-                  title="Klik untuk membuka secara besar & flip kartu 3D"
-                >
-                  <input
-                    ref={cardFileInputRef}
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleCardFileChange}
-                  />
-
-                  {/* Area Hitam Tengah untuk Foto Custom (Border Radius Lancip) */}
-                  <div
-                    className="relative w-full aspect-square bg-[#151a21] border border-black/30 rounded-none overflow-hidden flex flex-col items-center justify-center transition-all group-hover/item:brightness-105"
-                  >
-                    {card.image ? (
-                      <img
-                        src={card.image}
-                        alt={card.title}
-                        className="w-full h-full object-cover rounded-none"
-                      />
-                    ) : (
-                      <div className="flex flex-col items-center justify-center p-2 text-center text-slate-400">
-                        <div className="p-2 rounded-none bg-white/5 border border-white/10 mb-1.5 group-hover/item:border-white/30 group-hover/item:scale-105 transition-all">
-                          <Camera className="w-5 h-5 text-slate-400 group-hover/item:text-white" />
-                        </div>
-                        <span className="text-[10px] font-bold tracking-wider uppercase text-slate-400 group-hover/item:text-slate-200">
-                          Foto Custom
-                        </span>
-                        <span className="text-[8px] text-slate-500 group-hover/item:text-slate-400 mt-0.5">
-                          Klik untuk perbesar & flip
-                        </span>
+            items={cards.map(card => (
+              <div
+                key={card.id}
+                onClick={e => {
+                  e.stopPropagation();
+                  setSelectedCardId(card.id);
+                }}
+                className="w-full h-full bg-white p-2.5 pb-4 flex flex-col justify-between select-none shadow-md border border-neutral-300 rounded-none relative group/item cursor-pointer"
+                title="Klik untuk membuka secara besar & flip kartu 3D"
+              >
+                {/* Area Foto Polaroid */}
+                <div className="relative w-full aspect-square bg-[#151a21] border border-black/30 rounded-none overflow-hidden flex flex-col items-center justify-center transition-all group-hover/item:brightness-105">
+                  {card.image ? (
+                    <img
+                      src={card.image}
+                      alt={card.title}
+                      className="w-full h-full object-cover rounded-none"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center p-2 text-center text-slate-400">
+                      <div className="p-2 rounded-none bg-white/5 border border-white/10 mb-1.5 group-hover/item:border-white/30 group-hover/item:scale-105 transition-all">
+                        <Camera className="w-5 h-5 text-slate-400 group-hover/item:text-white" />
                       </div>
-                    )}
-
-                    {/* Badge Buka & Flip */}
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/item:opacity-100 flex flex-col items-center justify-center transition-opacity text-white text-[10px] font-medium p-2 text-center">
-                      <Sparkles className="w-4 h-4 mb-1 text-amber-300" />
-                      <span>Lihat Full & Flip 3D</span>
+                      <span className="text-[10px] font-bold tracking-wider uppercase text-slate-400 group-hover/item:text-slate-200">
+                        Foto Custom
+                      </span>
+                      <span className="text-[8px] text-slate-500 group-hover/item:text-slate-400 mt-0.5">
+                        Klik untuk perbesar & flip
+                      </span>
                     </div>
-                  </div>
+                  )}
 
-                  {/* Bagian Bawah Polaroid (Chin/Caption) */}
-                  <div className="pt-2 px-1 flex flex-col items-center text-center">
-                    <h4 className="text-[11px] font-bold text-[#2F2F2F] tracking-tight leading-tight truncate w-full">
-                      {card.title}
-                    </h4>
-                    <p className="text-[9px] font-medium text-[#FF6100] line-clamp-1 mt-0.5">
-                      {card.caption}
-                    </p>
-                    <span className="text-[8px] font-mono text-[#2F2F2F]/60 mt-1">
-                      {card.date}
-                    </span>
+                  {/* Badge Buka & Flip */}
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/item:opacity-100 flex flex-col items-center justify-center transition-opacity text-white text-[10px] font-medium p-2 text-center">
+                    <Sparkles className="w-4 h-4 mb-1 text-amber-300" />
+                    <span>Lihat Full & Flip 3D</span>
                   </div>
                 </div>
-              );
-            })}
+
+                {/* Chin / Caption Bawah Polaroid */}
+                <div className="pt-2 px-1 flex flex-col items-center text-center">
+                  <h4 className="text-[11px] font-bold text-[#2F2F2F] tracking-tight leading-tight truncate w-full">
+                    {card.title}
+                  </h4>
+                  <p className="text-[9px] font-medium text-[#FF6100] line-clamp-1 mt-0.5">
+                    {card.caption}
+                  </p>
+                  <span className="text-[8px] font-mono text-[#2F2F2F]/60 mt-1">
+                    {card.date}
+                  </span>
+                </div>
+              </div>
+            ))}
           />
         </div>
 
@@ -716,13 +632,14 @@ export function App() {
         </div>
       </section>
 
-      {/* MODAL POPUP: FULL VIEW + REACT BITS 3D FLIP CARD */}
+      {/* ========================================================
+          MODAL POPUP: FULL VIEW + REACT BITS 3D FLIP CARD
+          ======================================================== */}
       {selectedCard && (
         <div
           className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4 transition-all animate-in fade-in duration-200"
           onClick={() => setSelectedCardId(null)}
         >
-          {/* Container Modal */}
           <div
             className="relative flex flex-col items-center max-w-lg w-full"
             onClick={e => e.stopPropagation()}
@@ -736,25 +653,13 @@ export function App() {
               <X className="w-5 h-5" />
             </button>
 
-            {/* Input File Tersembunyi untuk Popup */}
-            <input
-              ref={popupFileInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={e => {
-                const file = e.target.files?.[0];
-                if (file && selectedCard) {
-                  handlePhotoUpload(selectedCard.id, file);
-                }
-              }}
-            />
 
-            {/* KOMPONEN REACT BITS FLIPCARD (POLAROID EDITION) */}
+
+            {/* Komponen React Bits FlipCard */}
             <FlipCard
               width={330}
               height={430}
-              radius={0} // Sharp/lancip!
+              radius={0}
               background="#ffffff"
               color="#2F2F2F"
               axis="y"
@@ -772,46 +677,24 @@ export function App() {
               shadow={true}
               shadowColor="#000000"
               shadowOpacity={0.5}
-              // SISI DEPAN: FOTO POLAROID PENUH
               front={
                 <div className="w-full h-full bg-white p-3.5 pb-6 flex flex-col justify-between select-none rounded-none border border-neutral-300 relative">
-                  {/* Area Hitam Foto Polaroid */}
-                  <div
-                    onClick={e => {
-                      e.stopPropagation();
-                      popupFileInputRef.current?.click();
-                    }}
-                    className="relative w-full aspect-square bg-[#151a21] border border-black/40 rounded-none overflow-hidden flex flex-col items-center justify-center cursor-pointer group/innerphoto transition-all"
-                    title="Klik untuk memilih foto custom"
-                  >
+                  <div className="relative w-full aspect-square bg-[#151a21] border border-black/40 rounded-none overflow-hidden flex flex-col items-center justify-center">
                     {selectedCard.image ? (
-                      <>
-                        <img
-                          src={selectedCard.image}
-                          alt={selectedCard.title}
-                          className="w-full h-full object-cover rounded-none"
-                        />
-                        <div className="absolute inset-0 bg-black/60 opacity-0 group-innerphoto:opacity-100 group-hover/innerphoto:opacity-100 flex flex-col items-center justify-center transition-opacity text-white">
-                          <Camera className="w-6 h-6 mb-1 text-white" />
-                          <span className="text-xs font-semibold">Ganti Foto 📷</span>
-                        </div>
-                      </>
+                      <img
+                        src={selectedCard.image}
+                        alt={selectedCard.title}
+                        className="w-full h-full object-cover rounded-none pointer-events-none select-none"
+                      />
                     ) : (
                       <div className="flex flex-col items-center justify-center p-4 text-center text-slate-400">
-                        <div className="p-3 bg-white/10 rounded-none border border-white/20 mb-2 group-hover/innerphoto:scale-110 transition-transform">
-                          <Camera className="w-8 h-8 text-white" />
-                        </div>
                         <span className="text-xs font-bold uppercase tracking-wider text-slate-200">
-                          Area Foto Custom
-                        </span>
-                        <span className="text-[10px] text-slate-400 mt-1">
-                          Klik di sini untuk upload foto 🖼️
+                          {selectedCard.title}
                         </span>
                       </div>
                     )}
                   </div>
 
-                  {/* Dagu (Chin) Polaroid Depan */}
                   <div className="pt-3 px-1 flex flex-col items-center text-center">
                     <h3 className="text-sm font-bold text-[#2F2F2F] tracking-tight">
                       {selectedCard.title}
@@ -828,10 +711,8 @@ export function App() {
                   </div>
                 </div>
               }
-              // SISI BELAKANG: PESAN SURAT POLAROID (PUTIH BERSIH, TANPA GARIS BIRU / WARNA BACKGROUND)
               back={
                 <div className="w-full h-full bg-white p-6 flex flex-col justify-between select-none rounded-none border border-neutral-300 relative text-[#2F2F2F]">
-                  {/* Bagian Tengah: Pesan Tulisan Ucapan */}
                   <div className="my-auto py-4 text-left">
                     <p
                       style={{ fontFamily: "'Caveat', cursive" }}
@@ -841,7 +722,6 @@ export function App() {
                     </p>
                   </div>
 
-                  {/* Bagian Bawah: Tanda Tangan & Tombol Balik */}
                   <div className="border-t border-neutral-200 pt-3 flex items-center justify-between">
                     <div className="text-left">
                       {selectedCard.backSignature && (
@@ -869,8 +749,6 @@ export function App() {
           </div>
         </div>
       )}
-
-
     </div>
   );
 }
