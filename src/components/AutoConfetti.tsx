@@ -19,45 +19,71 @@ export function AutoConfetti({
   scalar = 1.45
 }: AutoConfettiProps) {
   useEffect(() => {
-    // Delay singkat 200ms agar halaman web selesai mount
-    const timer = setTimeout(() => {
-      const end = Date.now() + duration;
+    // Mulai seketika tanpa jeda saat halaman dibuka
+    const end = Date.now() + duration;
 
-      const frame = () => {
-        if (Date.now() > end) return;
+    // Semburan pembuka instan langsung saat pertama kali terbuka
+    confetti({
+      particleCount: 15,
+      angle: 60,
+      spread: 60,
+      startVelocity: 60,
+      origin: { x: 0, y: 0.65 },
+      colors: colors,
+      scalar: scalar,
+      zIndex: 9999
+    });
+    confetti({
+      particleCount: 15,
+      angle: 120,
+      spread: 60,
+      startVelocity: 60,
+      origin: { x: 1, y: 0.65 },
+      colors: colors,
+      scalar: scalar,
+      zIndex: 9999
+    });
 
-        // Side Cannon Kiri (menembak ke arah kanan atas)
-        confetti({
-          particleCount: 3,
-          angle: 60,
-          spread: 55,
-          startVelocity: 55,
-          origin: { x: 0, y: 0.65 },
-          colors: colors,
-          scalar: scalar,
-          zIndex: 9999
-        });
+    let animationFrameId: number;
 
-        // Side Cannon Kanan (menembak ke arah kiri atas)
-        confetti({
-          particleCount: 3,
-          angle: 120,
-          spread: 55,
-          startVelocity: 55,
-          origin: { x: 1, y: 0.65 },
-          colors: colors,
-          scalar: scalar,
-          zIndex: 9999
-        });
+    const frame = () => {
+      if (Date.now() > end) return;
 
-        requestAnimationFrame(frame);
-      };
+      // Side Cannon Kiri (menembak ke arah kanan atas)
+      confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        startVelocity: 55,
+        origin: { x: 0, y: 0.65 },
+        colors: colors,
+        scalar: scalar,
+        zIndex: 9999
+      });
 
-      frame();
-    }, 300);
+      // Side Cannon Kanan (menembak ke arah kiri atas)
+      confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        startVelocity: 55,
+        origin: { x: 1, y: 0.65 },
+        colors: colors,
+        scalar: scalar,
+        zIndex: 9999
+      });
 
-    return () => clearTimeout(timer);
-  }, [duration, colors]);
+      animationFrameId = requestAnimationFrame(frame);
+    };
+
+    frame();
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [duration, colors, scalar]);
 
   return null;
 }
