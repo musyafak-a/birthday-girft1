@@ -4,6 +4,7 @@ import Folder from './components/Folder';
 import FlipCard from './components/FlipCard';
 import PaperCrumple from './components/PaperCrumple';
 import FallingPetals from './components/FallingPetals';
+import AutoConfetti from './components/AutoConfetti';
 import {
   Camera,
   X,
@@ -213,6 +214,9 @@ export function App() {
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen page-looping-bg pb-24 selection:bg-[#FF6100]/20 selection:text-[#2F2F2F] relative overflow-x-hidden w-full">
+      {/* Efek Confetti / Party Popper Side Cannons saat web dibuka */}
+      <AutoConfetti />
+
       {/* Kelopak Bunga Jatuh Melayang Looping 1 Halaman Penuh */}
       <FallingPetals />
 
