@@ -85,8 +85,8 @@ const INITIAL_CARDS: CardItem[] = [
     date: 'Hari Bahagia',
     image: '/fotosurat5.jpeg',
     backMessage:
-      'Hadiah terbesar adalah kehangatan orang-orang tersayang. Namun sebuah kejutan manis telah dipersiapkan spesial untuk merayakan senyum manismu hari ini! Buka dan nikmati! 🎉🎁',
-    backSignature: 'Kado Rahasia 🎁',
+      'Doa tulus untuk umur barumu: semoga senantiasa dilimpahkan kesehatan yang prima, rezeki yang berkah melimpah, dan ketenangan jiwa dalam setiap langkah perjalanan hidupmu! :)',
+    backSignature: '',
     stampText: 'SPECIAL GIFT 🎁'
   }
 ];
@@ -388,7 +388,7 @@ export function App() {
                 <p className="text-[11px] sm:text-xs text-neutral-800 leading-snug">
                   <span className="font-semibold text-neutral-900 mr-1">{USERNAME}</span>
                   <VerifiedBadge />
-                  <span className="text-neutral-700">lorem ipsum dolor sit amet</span>
+                  <span className="text-neutral-700">Happy 21st birthday! May your journey ahead be as sweet as a your fav strawberry matcha latte.</span>
                 </p>
               </div>
             </div>
@@ -420,7 +420,7 @@ export function App() {
         <div className="text-center mb-4 px-4 z-10 flex flex-col items-center">
           <SectionHeading goldWord="Suratnya" text="dibaca yah!" rotate={-0.6} />
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
-            Surat diputar ke kanan dengan ornamen polaroid foto, buket bunga, dan kelopak bunga bertaburan!
+            dibaca semua loh
           </p>
         </div>
 
@@ -560,7 +560,7 @@ export function App() {
         <div className="text-center mb-2 flex flex-col items-center">
           <SectionHeading goldWord="buka" text="mail ini" rotate={0.6} />
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
-            Arahkan kursor untuk mengintip, klik amplop untuk membuka seluruh foto!
+            buka lalu balik fotonya
           </p>
         </div>
 

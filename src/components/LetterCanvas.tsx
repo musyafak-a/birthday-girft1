@@ -52,10 +52,13 @@ export const LetterCanvas: React.FC<LetterCanvasProps> = ({
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      // Ensure Alex Brush font is fully loaded before drawing
+      // Ensure Alex Brush and Ephesis fonts are fully loaded before drawing
       try {
         if ('fonts' in document) {
-          await document.fonts.load('44px "Alex Brush"');
+          await Promise.all([
+            document.fonts.load('44px "Alex Brush"'),
+            document.fonts.load('44px "Ephesis"'),
+          ]);
           await document.fonts.ready;
         }
       } catch (err) {
@@ -161,9 +164,9 @@ export const LetterCanvas: React.FC<LetterCanvasProps> = ({
 
         // 4. Draw Recipient Greeting (e.g. 'My Dearest Eleanor,')
         if (recipient && recipient.trim()) {
-          const recipientSize = Math.round(40 * scale);
+          const recipientSize = Math.round(42 * scale);
           ctx.save();
-          ctx.font = `${recipientSize}px "Alex Brush", cursive`;
+          ctx.font = `${recipientSize}px "Ephesis", cursive`;
           ctx.fillStyle = textColor;
           ctx.textAlign = 'left';
           ctx.textBaseline = 'alphabetic';
@@ -206,19 +209,19 @@ export const LetterCanvas: React.FC<LetterCanvasProps> = ({
 
         // Well-proportioned body font (34px base) and compact line height (43px base)
         let bodyFontSize = Math.round(34 * scale);
-        let lineHeight = Math.round(43 * scale);
+        let lineHeight = Math.round(44 * scale);
 
         // Responsive adjustment if message is long
         const totalEstimatedWords = rawMessage.split(/\s+/).length;
         if (totalEstimatedWords > 75) {
-          bodyFontSize = Math.round(27 * scale);
-          lineHeight = Math.round(35 * scale);
+          bodyFontSize = Math.round(28 * scale);
+          lineHeight = Math.round(36 * scale);
         } else if (totalEstimatedWords > 55) {
-          bodyFontSize = Math.round(30 * scale);
-          lineHeight = Math.round(39 * scale);
+          bodyFontSize = Math.round(31 * scale);
+          lineHeight = Math.round(40 * scale);
         }
 
-        const bodyFont = `${bodyFontSize}px "Alex Brush", cursive`;
+        const bodyFont = `${bodyFontSize}px "Ephesis", cursive`;
 
         paragraphs.forEach((paragraph, pIndex) => {
           const lines = wrapText(paragraph, bodyFont, maxWidth);
@@ -258,9 +261,9 @@ export const LetterCanvas: React.FC<LetterCanvasProps> = ({
           currentY += Math.round(36 * scale);
 
           if (closing && closing.trim()) {
-            const closingSize = Math.round(36 * scale);
+            const closingSize = Math.round(38 * scale);
             ctx.save();
-            ctx.font = `${closingSize}px "Alex Brush", cursive`;
+            ctx.font = `${closingSize}px "Ephesis", cursive`;
             ctx.fillStyle = textColor;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'alphabetic';
@@ -274,9 +277,9 @@ export const LetterCanvas: React.FC<LetterCanvasProps> = ({
           }
 
           if (signature && signature.trim()) {
-            const signatureSize = Math.round(42 * scale);
+            const signatureSize = Math.round(44 * scale);
             ctx.save();
-            ctx.font = `${signatureSize}px "Alex Brush", cursive`;
+            ctx.font = `${signatureSize}px "Ephesis", cursive`;
             ctx.fillStyle = textColor;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'alphabetic';

@@ -70,7 +70,7 @@ const INITIAL_CARDS: CardItem[] = [
     date: 'Hari Bahagia',
     image: null,
     backMessage:
-      'Hadiah terbesar adalah kehangatan orang-orang tersayang. Namun sebuah kejutan manis telah dipersiapkan spesial untuk merayakan senyum manismu hari ini! Buka dan nikmati! 🎉🎁',
+      'Doa tulus untuk umur barumu: semoga senantiasa dilimpahkan kesehatan yang prima, rezeki yang berkah melimpah, dan ketenangan jiwa dalam setiap langkah perjalanan hidupmu! :)',
     backSignature: 'Kado Rahasia 🎁',
     stampText: 'SPECIAL GIFT 🎁'
   }
@@ -468,7 +468,7 @@ export function App() {
                       fill="#FFFFFF"
                     />
                   </svg>
-                  <span className="text-neutral-700">lorem ipsum dolor sit amet</span>
+                  <span className="text-neutral-700">Happy 21st birthday! May your journey ahead be as sweet as a your fav strawberry matcha latte.</span>
                 </p>
               </div>
             </div>
@@ -501,9 +501,9 @@ export function App() {
           <h2 className="text-[#2F2F2F] text-3xl md:text-4xl font-bold mt-2 font-cormorant tracking-tight">
             Surat Ucapan
           </h2>
-          <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
+          {/* <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
             Surat diputar ke kanan dengan ornamen polaroid foto, buket bunga, dan kelopak bunga bertaburan!
-          </p>
+          </p> */}
         </div>
 
         {/* Hidden inputs untuk upload foto ornamen */}
@@ -690,7 +690,7 @@ export function App() {
         {/* Petunjuk Scroll ke Section Folder / Surat */}
         <div className="flex flex-col items-center gap-1 mt-10 text-[#FF6100] z-10">
           <span className="text-xs font-semibold tracking-wide">
-            Scroll ke bawah untuk melihat Surat Kenangan 💌
+            dibawah masih ada lagi
           </span>
           <div className="animate-bounce mt-1">
             <ChevronDown className="w-4 h-4 text-[#FF6100]" />
