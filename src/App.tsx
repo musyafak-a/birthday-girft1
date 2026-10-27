@@ -427,7 +427,7 @@ export function App() {
       {/* ========================================================
           SECTION 2: PAPER CRUMPLE + ORNAMEN POLAROID, BUKET, & KELOPAK
           ======================================================== */}
-      <section className="w-full flex flex-col items-center mb-20 relative overflow-hidden px-2 md:px-6">
+      <section className="w-full flex flex-col items-center mb-20 relative overflow-x-clip px-0 sm:px-2 md:px-6">
         <div className="text-center mb-4 px-4 z-10 flex flex-col items-center">
           <SectionHeading goldWord="Suratnya" text="dibaca yah!" rotate={-0.6} />
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
@@ -450,7 +450,7 @@ export function App() {
         {/* Panggung Interaktif Surat & Ornamen */}
         <div className="relative w-full max-w-5xl min-h-[680px] flex items-center justify-center my-2">
           {/* 3D Paper Crumple Letter */}
-          <div className="w-full flex justify-center items-center relative z-0">
+          <div className="w-full flex justify-center items-center relative z-0 -translate-x-3.5 sm:translate-x-0 transition-transform">
             <LetterCanvas
               monogram={CUSTOM_LETTER.monogram}
               title={CUSTOM_LETTER.title}
@@ -496,7 +496,7 @@ export function App() {
             dragMomentum={false}
             whileHover={{ scale: 1.05 }}
             whileDrag={{ scale: 1.12, cursor: 'grabbing' }}
-            className="absolute left-2 md:left-8 bottom-4 md:bottom-8 z-30 cursor-grab active:cursor-grabbing select-none touch-none"
+            className="absolute left-1 sm:left-2 md:left-8 bottom-4 md:bottom-8 z-30 cursor-grab active:cursor-grabbing select-none touch-none"
             title="Buket Bunga 💐 (Tahan & seret kursor untuk memindahkan)"
           >
             <img
@@ -508,7 +508,7 @@ export function App() {
           </motion.div>
 
           {/* Ornamen Polaroid Bertingkat */}
-          <div className="absolute right-2 md:right-10 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2.5 z-20 pointer-events-auto scale-90 sm:scale-100 origin-right">
+          <div className="absolute -right-2 sm:right-2 md:right-10 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2 sm:gap-2.5 z-20 pointer-events-auto scale-[0.80] sm:scale-90 md:scale-100 origin-right">
             {ORNAMENT_CONFIGS.map((config, index) => (
               <div
                 key={index}
