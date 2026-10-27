@@ -201,6 +201,17 @@ export function App() {
     setPaperImage(url);
   };
 
+  // Window width tracker for responsive modal & components
+  const [windowWidth, setWindowWidth] = useState<number>(() =>
+    typeof window !== 'undefined' ? window.innerWidth : 1024
+  );
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Keyboard shortcut ESC to close popup
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -556,7 +567,7 @@ export function App() {
       {/* ========================================================
           SECTION 3: MEMORY LETTER & POLAROID PHOTO CARDS
           ======================================================== */}
-      <section className="w-full max-w-4xl flex flex-col items-center pt-10 relative border-t border-amber-900/15">
+      <section className="w-full max-w-4xl flex flex-col items-center pt-8 md:pt-10 relative border-t border-amber-900/15 px-4 sm:px-6">
         <div className="text-center mb-2 flex flex-col items-center">
           <SectionHeading goldWord="buka" text="mail ini" rotate={0.6} />
           <p className="text-xs md:text-sm text-[#FF6100] font-medium mt-1">
@@ -565,11 +576,12 @@ export function App() {
         </div>
 
         {/* Komponen Amplop Surat */}
-        <div className="flex justify-center items-center w-full mt-36 md:mt-40 mb-10 py-4 min-h-[380px] overflow-visible">
+        <div className="flex justify-center items-center w-full mt-24 sm:mt-32 md:mt-40 mb-8 md:mb-10 py-4 min-h-[300px] sm:min-h-[340px] md:min-h-[380px] overflow-visible">
           <Folder
             color="#E5D5B8"
             backColor="#F1E5CF"
             size={1.05}
+            mobileSize={0.78}
             items={cards.map(card => (
               <div
                 key={card.id}
@@ -577,7 +589,7 @@ export function App() {
                   e.stopPropagation();
                   setSelectedCardId(card.id);
                 }}
-                className="w-full h-full bg-white p-2.5 pb-4 flex flex-col justify-between select-none shadow-md border border-neutral-300 rounded-none relative group/item cursor-pointer"
+                className="w-full h-full bg-white p-2 sm:p-2.5 pb-3 sm:pb-4 flex flex-col justify-between select-none shadow-md border border-neutral-300 rounded-none relative group/item cursor-pointer"
                 title="Klik untuk membuka secara besar & flip kartu 3D"
               >
                 {/* Area Foto Polaroid */}
@@ -589,35 +601,35 @@ export function App() {
                       className="w-full h-full object-cover rounded-none"
                     />
                   ) : (
-                    <div className="flex flex-col items-center justify-center p-2 text-center text-slate-400">
-                      <div className="p-2 rounded-none bg-white/5 border border-white/10 mb-1.5 group-hover/item:border-white/30 group-hover/item:scale-105 transition-all">
-                        <Camera className="w-5 h-5 text-slate-400 group-hover/item:text-white" />
+                    <div className="flex flex-col items-center justify-center p-1.5 sm:p-2 text-center text-slate-400">
+                      <div className="p-1.5 sm:p-2 rounded-none bg-white/5 border border-white/10 mb-1 group-hover/item:border-white/30 group-hover/item:scale-105 transition-all">
+                        <Camera className="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 group-hover/item:text-white" />
                       </div>
-                      <span className="text-[10px] font-bold tracking-wider uppercase text-slate-400 group-hover/item:text-slate-200">
+                      <span className="text-[8.5px] sm:text-[10px] font-bold tracking-wider uppercase text-slate-400 group-hover/item:text-slate-200">
                         Foto Custom
                       </span>
-                      <span className="text-[8px] text-slate-500 group-hover/item:text-slate-400 mt-0.5">
+                      <span className="text-[7px] sm:text-[8px] text-slate-500 group-hover/item:text-slate-400 mt-0.5">
                         Klik untuk perbesar & flip
                       </span>
                     </div>
                   )}
 
                   {/* Badge Buka & Flip */}
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/item:opacity-100 flex flex-col items-center justify-center transition-opacity text-white text-[10px] font-medium p-2 text-center">
-                    <Sparkles className="w-4 h-4 mb-1 text-amber-300" />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover/item:opacity-100 flex flex-col items-center justify-center transition-opacity text-white text-[9px] sm:text-[10px] font-medium p-1 sm:p-2 text-center">
+                    <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 mb-1 text-amber-300" />
                     <span>Lihat Full & Flip 3D</span>
                   </div>
                 </div>
 
                 {/* Chin / Caption Bawah Polaroid */}
-                <div className="pt-2 px-1 flex flex-col items-center text-center">
-                  <h4 className="text-[11px] font-bold text-[#2F2F2F] tracking-tight leading-tight truncate w-full">
+                <div className="pt-1.5 sm:pt-2 px-0.5 sm:px-1 flex flex-col items-center text-center">
+                  <h4 className="text-[10px] sm:text-[11px] font-bold text-[#2F2F2F] tracking-tight leading-tight truncate w-full">
                     {card.title}
                   </h4>
-                  <p className="text-[9px] font-medium text-[#FF6100] line-clamp-1 mt-0.5">
+                  <p className="text-[8px] sm:text-[9px] font-medium text-[#FF6100] line-clamp-1 mt-0.5">
                     {card.caption}
                   </p>
-                  <span className="text-[8px] font-mono text-[#2F2F2F]/60 mt-1">
+                  <span className="text-[7px] sm:text-[8px] font-mono text-[#2F2F2F]/60 mt-0.5 sm:mt-1">
                     {card.date}
                   </span>
                 </div>
@@ -626,8 +638,8 @@ export function App() {
           />
         </div>
 
-        <div className="text-center space-y-2 mt-4">
-          <p className="text-xs font-medium text-[#FF6100]">
+        <div className="text-center space-y-2 mt-4 px-2 max-w-md mx-auto">
+          <p className="text-xs font-medium text-[#FF6100] leading-relaxed">
             💡 Tips: Klik kartu polaroid mana saja untuk melihatnya dalam ukuran besar dan membaliknya dalam efek 3D Flip Card!
           </p>
           <div className="font-mono text-xs text-[#2F2F2F]/70">
@@ -661,8 +673,8 @@ export function App() {
 
             {/* Komponen React Bits FlipCard */}
             <FlipCard
-              width={330}
-              height={430}
+              width={windowWidth < 380 ? 290 : windowWidth < 640 ? 320 : 340}
+              height={windowWidth < 380 ? 390 : 430}
               radius={0}
               background="#ffffff"
               color="#2F2F2F"

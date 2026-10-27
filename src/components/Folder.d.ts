@@ -4,6 +4,7 @@ export interface FolderProps {
   color?: string;
   backColor?: string;
   size?: number;
+  mobileSize?: number;
   items?: ReactNode[];
   className?: string;
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const darkenColor = (hex, percent) => {
   let color = hex.startsWith('#') ? hex.slice(1) : hex;
@@ -24,6 +24,7 @@ const Folder = ({
   color = '#E5D5B8',
   backColor = '#F1E5CF',
   size = 1,
+  mobileSize,
   items = [],
   className = ''
 }) => {
@@ -34,6 +35,16 @@ const Folder = ({
   const [open, setOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [paperOffsets, setPaperOffsets] = useState(Array.from({ length: paperCount }, () => ({ x: 0, y: 0 })));
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(typeof window !== 'undefined' && window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const isFlapOpen = open || isHovered;
 
@@ -66,28 +77,57 @@ const Folder = ({
     });
   };
 
-  const scaleStyle = { transform: `scale(${size})`, transformOrigin: 'center center' };
+  const effectiveSize = mobileSize !== undefined
+    ? (isMobile ? mobileSize : size)
+    : (isMobile ? (typeof size === 'number' ? size * 0.74 : 0.78) : size);
+
+  const scaleStyle = { transform: `scale(${effectiveSize})`, transformOrigin: 'center center' };
 
   const getOpenTransform = (index, count) => {
     if (count === 1) {
-      return 'translate(-50%, -90%) rotate(0deg)';
+      return isMobile ? 'translate(-50%, -85%) rotate(0deg)' : 'translate(-50%, -90%) rotate(0deg)';
     }
     if (count === 2) {
+      if (isMobile) {
+        if (index === 0) return 'translate(-92%, -65%) rotate(-8deg)';
+        if (index === 1) return 'translate(-8%, -65%) rotate(8deg)';
+      }
       if (index === 0) return 'translate(-104%, -65%) rotate(-10deg)';
       if (index === 1) return 'translate(4%, -65%) rotate(10deg)';
     }
     if (count === 3) {
+      if (isMobile) {
+        if (index === 0) return 'translate(-102%, -60%) rotate(-10deg)';
+        if (index === 1) return 'translate(2%, -60%) rotate(10deg)';
+        if (index === 2) return 'translate(-50%, -90%) rotate(0deg)';
+      }
       if (index === 0) return 'translate(-115%, -60%) rotate(-14deg)';
       if (index === 1) return 'translate(15%, -60%) rotate(14deg)';
       if (index === 2) return 'translate(-50%, -95%) rotate(0deg)';
     }
     if (count === 4) {
+      if (isMobile) {
+        if (index === 0) return 'translate(-112%, -58%) rotate(-12deg)';
+        if (index === 1) return 'translate(-72%, -80%) rotate(-4deg)';
+        if (index === 2) return 'translate(-28%, -80%) rotate(4deg)';
+        if (index === 3) return 'translate(12%, -58%) rotate(12deg)';
+      }
       if (index === 0) return 'translate(-135%, -60%) rotate(-16deg)';
       if (index === 1) return 'translate(-80%, -85%) rotate(-6deg)';
       if (index === 2) return 'translate(-20%, -85%) rotate(6deg)';
       if (index === 3) return 'translate(35%, -60%) rotate(16deg)';
     }
     if (count >= 5) {
+      if (isMobile) {
+        const mobilePositions = [
+          'translate(-118%, -48%) rotate(-12deg)',
+          'translate(-84%, -62%) rotate(-6deg)',
+          'translate(-50%, -76%) rotate(0deg)',
+          'translate(-16%, -62%) rotate(6deg)',
+          'translate(18%, -48%) rotate(12deg)'
+        ];
+        return mobilePositions[index] || 'translate(-50%, -76%) rotate(0deg)';
+      }
       const positions = [
         'translate(-135%, -48%) rotate(-16deg)',
         'translate(-90%, -62%) rotate(-8deg)',
@@ -311,10 +351,14 @@ const Folder = ({
             const transformStyle = open
               ? `${getOpenTransform(i, paperCount)} translate(${currentOffset.x}px, ${currentOffset.y}px)`
               : isHovered
-              ? `translate(-50%, -36px) scale(0.98)`
-              : 'translate(-50%, 20px) scale(0.94)';
+              ? `translate(-50%, ${isMobile ? '-28px' : '-36px'}) scale(0.98)`
+              : `translate(-50%, ${isMobile ? '8px' : '15px'}) scale(0.94)`;
 
-            const cardHeight = open ? '245px' : isHovered ? '210px' : '155px';
+            const cardHeight = open
+              ? (isMobile ? '200px' : '245px')
+              : isHovered
+              ? (isMobile ? '170px' : '210px')
+              : (isMobile ? '130px' : '155px');
 
             return (
               <div
@@ -322,9 +366,11 @@ const Folder = ({
                 onMouseMove={e => handlePaperMouseMove(e, i)}
                 onMouseLeave={e => handlePaperMouseLeave(e, i)}
                 className={`absolute z-20 bottom-[20px] left-1/2 transition-all duration-500 ease-out shadow-xl border border-neutral-300/80 overflow-hidden ${
+                  isMobile ? 'w-[150px]' : 'w-[200px]'
+                } ${
                   open
-                    ? 'w-[200px] hover:scale-110 hover:z-50 hover:shadow-2xl pointer-events-auto'
-                    : 'w-[200px] pointer-events-none'
+                    ? 'hover:scale-110 hover:z-50 hover:shadow-2xl pointer-events-auto'
+                    : 'pointer-events-none'
                 }`}
                 style={{
                   height: cardHeight,
